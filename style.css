@@ -1,0 +1,444 @@
+/* ==========================================================================
+   FORMÉLI & CO. — REYKJAVÍK, ICELAND
+   Luxury Editorial Design System & Styling
+   Inspired by Almada Label & Loro Piana
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Default: Rich Chocolate Palette (Image 1 aesthetic) */
+  --bg-primary: #241B17;       /* Espresso */
+  --bg-secondary: #3E2B23;     /* Dark Chocolate */
+  --bg-tertiary: #33231B;      /* Deep roasted */
+  --bg-surface: #473227;       /* Mocha depth */
+  --bg-card: #2D201A;          /* Card background */
+  --bg-elevated: #3E2B23;      /* Elevated surface */
+  --bg-glass: rgba(36, 27, 23, 0.88);
+  --bg-pill: rgba(237, 225, 212, 0.08);
+
+  --text-primary: #EDE1D4;     /* Cream */
+  --text-secondary: #CBB89E;   /* Oat */
+  --text-muted: #A8927B;       /* Taupe */
+  --text-contrast: #241B17;    /* Inverted espresso */
+
+  --border-light: rgba(203, 184, 158, 0.15);
+  --border-strong: rgba(203, 184, 158, 0.35);
+
+  --accent-warm: #AB664F;      /* Camel */
+  --accent-gold: #CBB89E;      /* Oat */
+  --accent-chocolate: #6A4735; /* Chocolate */
+
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --nav-height: 80px;
+  --topbar-height: 38px;
+  --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Warm Oat Theme (Image 2 & 3 aesthetic) */
+[data-theme="oat"] {
+  --bg-primary: #F7F4EE;       /* Warm Alabaster / Milk */
+  --bg-secondary: #EFE9DE;     /* Warm Oat */
+  --bg-tertiary: #E5DDCF;      /* Soft Taupe Sand */
+  --bg-surface: #EDE1D4;       /* Cream */
+  --bg-card: #FFFFFF;          /* Pure Crisp Card */
+  --bg-elevated: #FAF8F5;      /* Elevated Surface */
+  --bg-glass: rgba(247, 244, 238, 0.92);
+  --bg-pill: rgba(106, 71, 53, 0.08);
+
+  --text-primary: #241B17;     /* Espresso dark */
+  --text-secondary: #6A4735;   /* Chocolate */
+  --text-muted: #7B5A45;       /* Mocha */
+  --text-contrast: #EDE1D4;    /* Cream inverted */
+
+  --border-light: rgba(106, 71, 53, 0.12);
+  --border-strong: rgba(106, 71, 53, 0.3);
+
+  --accent-warm: #AB664F;      /* Camel */
+  --accent-gold: #7B5A45;      /* Mocha */
+  --accent-chocolate: #3E2B23; /* Dark Chocolate */
+}
+
+/* Reset & Global */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background-color 0.5s var(--ease-luxury), color 0.5s var(--ease-luxury);
+}
+
+/* Typography classes */
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+.tracking-luxury {
+  letter-spacing: 0.18em;
+}
+
+.tracking-brand {
+  letter-spacing: 0.28em;
+}
+
+.tracking-tight-serif {
+  letter-spacing: -0.015em;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Container */
+.luxury-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+@media (min-width: 1024px) {
+  .luxury-container {
+    padding: 0 4rem;
+  }
+}
+
+/* Smooth luxury transitions */
+.transition-luxury {
+  transition: all 0.4s var(--ease-luxury);
+}
+
+/* Buttons */
+.btn-luxury-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.85rem 2.2rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background-color: var(--text-primary);
+  color: var(--text-contrast);
+  border: 1px solid var(--text-primary);
+  cursor: pointer;
+  transition: all 0.35s var(--ease-luxury);
+  text-decoration: none;
+}
+
+.btn-luxury-primary:hover {
+  background-color: transparent;
+  color: var(--text-primary);
+  transform: translateY(-2px);
+}
+
+.btn-luxury-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.85rem 2.2rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
+  cursor: pointer;
+  transition: all 0.35s var(--ease-luxury);
+  text-decoration: none;
+}
+
+.btn-luxury-outline:hover {
+  background-color: var(--text-primary);
+  color: var(--text-contrast);
+  border-color: var(--text-primary);
+  transform: translateY(-2px);
+}
+
+.btn-luxury-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 3px;
+  cursor: pointer;
+}
+
+.btn-luxury-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0.7);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease-luxury);
+}
+
+.btn-luxury-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* Header & Sticky Nav */
+header.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-light);
+  transition: background-color 0.4s var(--ease-luxury), border-color 0.4s var(--ease-luxury);
+}
+
+/* Category cards hover zoom */
+.category-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.category-card img {
+  transition: transform 0.85s var(--ease-luxury);
+}
+
+.category-card:hover img {
+  transform: scale(1.06);
+}
+
+/* Product Card */
+.product-card {
+  position: relative;
+  transition: transform 0.4s var(--ease-luxury);
+}
+
+.product-image-wrap {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--bg-surface);
+  aspect-ratio: 3/4;
+}
+
+.product-image-wrap img.main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s var(--ease-luxury), opacity 0.5s ease;
+}
+
+.product-image-wrap img.hover-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-luxury), transform 0.7s var(--ease-luxury);
+}
+
+.product-card:hover .product-image-wrap img.main-img {
+  transform: scale(1.04);
+}
+
+.product-card:hover .product-image-wrap img.hover-img {
+  opacity: 1;
+  transform: scale(1.04);
+}
+
+.product-quick-add {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  transform: translateY(20px);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.35s var(--ease-luxury);
+}
+
+.product-card:hover .product-quick-add {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Color Swatches dots */
+.swatch-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.25s var(--ease-luxury), box-shadow 0.25s var(--ease-luxury);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.swatch-dot:hover {
+  transform: scale(1.25);
+}
+
+.swatch-dot.active {
+  box-shadow: 0 0 0 2px var(--bg-primary), 0 0 0 3.5px var(--text-primary);
+  transform: scale(1.15);
+}
+
+/* Drawers & Modals */
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(20, 14, 11, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease-luxury);
+}
+
+.drawer-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.drawer-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 480px;
+  background-color: var(--bg-primary);
+  border-left: 1px solid var(--border-light);
+  z-index: 101;
+  transform: translateX(100%);
+  transition: transform 0.5s var(--ease-luxury);
+  display: flex;
+  flex-direction: column;
+}
+
+.drawer-panel.active {
+  transform: translateX(0);
+}
+
+/* Modal Popup */
+.modal-container {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease-luxury);
+}
+
+.modal-container.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-box {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  transform: scale(0.96) translateY(15px);
+  transition: transform 0.45s var(--ease-luxury);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.modal-container.active .modal-box {
+  transform: scale(1) translateY(0);
+}
+
+/* Toast */
+.toast-notice {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background-color: var(--text-primary);
+  color: var(--text-contrast);
+  padding: 1rem 1.75rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.25);
+  z-index: 200;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.4s var(--ease-luxury);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.toast-notice.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Material Texture Weave Effect */
+.texture-bg {
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.texture-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(36, 27, 23, 0.7) 0%, rgba(36, 27, 23, 0.9) 100%);
+}
+
+[data-theme="oat"] .texture-bg::before {
+  background: linear-gradient(180deg, rgba(239, 233, 222, 0.8) 0%, rgba(247, 244, 238, 0.92) 100%);
+}

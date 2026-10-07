@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FORMÉLI & CO. — Reykjavík | Nordic Quiet Luxury Fashion</title>
+  <meta name="description" content="FORMÉLI & CO. is a quiet luxury fashion house from Reykjavík, Iceland. Exceptional coats, knitwear, and timeless wardrobe essentials crafted in natural cashmere and virgin wool.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            espresso: '#241B17',
+            darkchoc: '#3E2B23',
+            chocolate: '#6A4735',
+            mocha: '#7B5A45',
+            taupe: '#A8927B',
+            oat: '#CBB89E',
+            cream: '#EDE1D4',
+            camel: '#AB664F',
+            nordicblack: '#1E1A16'
+          },
+          fontFamily: {
+            serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Design Tokens & Style -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="selection:bg-oat selection:text-espresso">
+
+  <!-- ==========================================================================
+       1. TOP ANNOUNCEMENT BAR
+       ========================================================================== -->
+  <aside class="bg-espresso text-cream text-[11px] tracking-wider py-2 px-4 border-b border-border-light relative z-50">
+    <div class="luxury-container flex flex-wrap items-center justify-between gap-2">
+      <!-- Left: Boutique Location -->
+      <div class="hidden md:flex items-center gap-2 opacity-80">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+        <span>Flagship: Laugavegur 42, 101 Reykjavík</span>
+      </div>
+
+      <!-- Center: Shipping Message -->
+      <div class="flex-1 text-center font-light uppercase tracking-luxury text-[10px] md:text-[11px]">
+        Complimentary Express Shipping on Orders Over 45.000 ISK kr &nbsp;·&nbsp; Worldwide Duties Included
+      </div>
+
+      <!-- Right: Currency & Theme Switcher -->
+      <div class="flex items-center gap-4 ml-auto text-[11px]">
+        <!-- Currency Selector -->
+        <div class="flex items-center gap-1.5">
+          <label for="currency-select" class="sr-only">Currency</label>
+          <select id="currency-select" class="bg-transparent text-cream border-none text-[11px] font-medium uppercase focus:outline-none cursor-pointer">
+            <option value="ISK" selected class="bg-espresso text-cream">ISK (kr)</option>
+            <option value="EUR" class="bg-espresso text-cream">EUR (€)</option>
+            <option value="USD" class="bg-espresso text-cream">USD ($)</option>
+          </select>
+        </div>
+
+        <!-- Tone Palette Switcher -->
+        <button 
+          id="theme-toggle-btn" 
+          type="button" 
+          class="flex items-center gap-1.5 text-[11px] tracking-widest font-medium text-oat hover:text-white transition-colors cursor-pointer border border-oat/30 px-2 py-0.5 rounded-sm"
+          title="Switch color mood"
+        >
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3v1m0 16v1m9-9h-1M4 9h-1m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+          </svg>
+          <span class="hidden sm:inline">WARM OAT THEME</span>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ==========================================================================
+       2. LUXURY NAVIGATION HEADER
+       ========================================================================== -->
+  <header class="sticky-header">
+    <div class="luxury-container flex items-center justify-between h-20">
+      <!-- Left: Navigation Links -->
+      <nav class="hidden lg:flex items-center space-x-7 text-xs font-medium tracking-luxury uppercase">
+        <a href="#signature-edit-section" class="hover:opacity-70 transition-opacity">Shop</a>
+        <a href="#signature-edit-section" class="hover:opacity-70 transition-opacity" onclick="window.scrollToCategory('all')">New In</a>
+        <a href="#category-grid-section" class="hover:opacity-70 transition-opacity" onclick="window.scrollToCategory('coats')">Coats</a>
+        <a href="#category-grid-section" class="hover:opacity-70 transition-opacity" onclick="window.scrollToCategory('knitwear')">Knitwear</a>
+        <a href="#category-grid-section" class="hover:opacity-70 transition-opacity" onclick="window.scrollToCategory('essentials')">Essentials</a>
+        <a href="#materials-section" class="hover:opacity-70 transition-opacity">Materials</a>
+        <a href="#philosophy-section" class="hover:opacity-70 transition-opacity">About</a>
+      </nav>
+
+      <!-- Mobile Menu Trigger Button -->
+      <button 
+        type="button" 
+        id="mobile-menu-btn" 
+        class="lg:hidden p-2 text-text-primary focus:outline-none"
+        onclick="document.getElementById('mobile-drawer').classList.toggle('active')"
+        aria-label="Toggle Navigation"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+
+      <!-- Center: Logo -->
+      <div class="text-center">
+        <a href="#" class="inline-block group">
+          <h1 class="font-serif text-2xl lg:text-3xl tracking-brand font-normal text-text-primary leading-none uppercase">
+            FORMÉLI & CO.
+          </h1>
+          <span class="block text-[9px] tracking-[0.35em] text-text-muted mt-1 uppercase">
+            REYKJAVÍK
+          </span>
+        </a>
+      </div>
+
+      <!-- Right: Utility Actions (Search, Account, Bag) -->
+      <div class="flex items-center space-x-5 text-xs font-medium tracking-luxury uppercase">
+        <!-- Search Trigger -->
+        <button type="button" class="open-search-btn flex items-center gap-1.5 hover:opacity-70 transition-opacity p-1" title="Search">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <span class="hidden sm:inline text-[11px]">Search</span>
+        </button>
+
+        <!-- Account / Concierge -->
+        <a href="#boutique-section" class="hidden sm:flex items-center gap-1.5 hover:opacity-70 transition-opacity p-1">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+          </svg>
+          <span class="text-[11px]">Account</span>
+        </a>
+
+        <!-- Shopping Bag Trigger -->
+        <button type="button" class="open-cart-btn flex items-center gap-1.5 hover:opacity-70 transition-opacity p-1 relative" title="View Bag">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+          </svg>
+          <span class="text-[11px]">Bag (<span class="cart-count-badge">0</span>)</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div id="mobile-drawer" class="fixed inset-0 bg-bg-primary/95 backdrop-blur-xl z-[90] flex flex-col justify-between p-8 transform -translate-x-full transition-transform duration-500 lg:hidden">
+    <div>
+      <div class="flex justify-between items-center pb-6 border-b border-border-light">
+        <span class="font-serif text-xl tracking-brand uppercase">FORMÉLI & CO.</span>
+        <button type="button" class="p-2 text-2xl" onclick="document.getElementById('mobile-drawer').classList.remove('active')">✕</button>
+      </div>
+      <div class="flex flex-col space-y-6 pt-8 font-serif text-2xl tracking-wide">
+        <a href="#signature-edit-section" onclick="document.getElementById('mobile-drawer').classList.remove('active'); window.scrollToCategory('all')">The Signature Edit</a>
+        <a href="#category-grid-section" onclick="document.getElementById('mobile-drawer').classList.remove('active'); window.scrollToCategory('coats')">Coats & Outerwear</a>
+        <a href="#category-grid-section" onclick="document.getElementById('mobile-drawer').classList.remove('active'); window.scrollToCategory('knitwear')">Knitwear</a>
+        <a href="#category-grid-section" onclick="document.getElementById('mobile-drawer').classList.remove('active'); window.scrollToCategory('essentials')">Essentials</a>
+        <a href="#materials-section" onclick="document.getElementById('mobile-drawer').classList.remove('active')">The Beauty in Natural Materials</a>
+        <a href="#palette-section" onclick="document.getElementById('mobile-drawer').classList.remove('active')">Chocolate Palette Guide</a>
+        <a href="#journal-section" onclick="document.getElementById('mobile-drawer').classList.remove('active')">Reykjavík Journal</a>
+      </div>
+    </div>
+    <div class="text-xs text-text-muted space-y-2 pt-6 border-t border-border-light">
+      <p>Flagship Atelier: Laugavegur 42, Reykjavík</p>
+      <p>concierge@formeli.is · +354 555 4200</p>
+    </div>
+  </div>
+
+  <main>
+    <!-- ==========================================================================
+         3. HERO EDITORIAL STAGE (SLIDER WITH 3 ATMOSPHERES)
+         ========================================================================== -->
+    <section class="relative min-h-[82vh] lg:min-h-[88vh] flex items-center overflow-hidden bg-bg-surface">
+      
+      <!-- Slide 1: Modern Elegance in Chocolate (Image 1 aesthetic) -->
+      <div class="hero-slide absolute inset-0 transition-opacity duration-1000 ease-in-out">
+        <div class="absolute inset-0 bg-cover bg-center lg:bg-right" style="background-image: url('https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=1920&q=85');">
+          <div class="absolute inset-0 bg-gradient-to-r from-espresso/90 via-espresso/60 to-transparent lg:w-3/5"></div>
+        </div>
+        <div class="luxury-container relative h-full flex items-center z-20 py-24">
+          <div class="max-w-xl text-cream">
+            <span class="block text-xs font-sans tracking-[0.25em] uppercase text-oat mb-4">
+              A Season of Quiet Luxury
+            </span>
+            <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-light leading-tight mb-6">
+              Modern Elegance in Rich Chocolate
+            </h2>
+            <p class="font-sans text-sm sm:text-base text-cream/80 font-light leading-relaxed mb-8 max-w-md">
+              Timeless silhouettes tailored from Icelandic virgin wool and certified Mongolian cashmere. Designed for sub-arctic winds and eternal moments.
+            </p>
+            <div class="flex flex-wrap items-center gap-4">
+              <a href="#signature-edit-section" class="btn-luxury-primary bg-cream text-espresso hover:bg-transparent hover:text-cream">
+                Discover The Collection &nbsp;→
+              </a>
+              <a href="#materials-section" class="btn-luxury-outline border-cream/40 text-cream hover:bg-cream hover:text-espresso">
+                Our Materials
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2: Nordic Luxury in Warm Oat (Image 2 aesthetic) -->
+      <div class="hero-slide absolute inset-0 opacity-0 pointer-events-none transition-opacity duration-1000 ease-in-out">
+        <div class="absolute inset-0 bg-cover bg-center lg:bg-right" style="background-image: url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1920&q=85');">
+          <div class="absolute inset-0 bg-gradient-to-r from-espresso/80 via-espresso/50 to-transparent lg:w-3/5"></div>
+        </div>
+        <div class="luxury-container relative h-full flex items-center z-20 py-24">
+          <div class="max-w-xl text-cream">
+            <span class="block text-xs font-sans tracking-[0.25em] uppercase text-oat mb-4">
+              Nordic Luxury For Everyday Life
+            </span>
+            <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-light leading-tight mb-6">
+              Timeless in Every Season
+            </h2>
+            <p class="font-sans text-sm sm:text-base text-cream/80 font-light leading-relaxed mb-8 max-w-md">
+              Modern silhouettes. Natural materials. Thoughtfully designed for a more considered way of living.
+            </p>
+            <div class="flex flex-wrap items-center gap-4">
+              <a href="#signature-edit-section" class="btn-luxury-primary bg-cream text-espresso hover:bg-transparent hover:text-cream">
+                Shop The Collection &nbsp;→
+              </a>
+              <a href="#philosophy-section" class="btn-luxury-outline border-cream/40 text-cream hover:bg-cream hover:text-espresso">
+                Our Story
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: Tactile Cashmere Editorial (Image 3 aesthetic) -->
+      <div class="hero-slide absolute inset-0 opacity-0 pointer-events-none transition-opacity duration-1000 ease-in-out">
+        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1920&q=85');">
+          <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-espresso/90 via-espresso/60 to-transparent"></div>
+        </div>
+        <div class="luxury-container relative h-full flex items-center z-20 py-24">
+          <div class="max-w-xl text-cream">
+            <span class="block text-xs font-sans tracking-[0.25em] uppercase text-oat mb-4">
+              Artisan Craftsmanship
+            </span>
+            <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-light leading-tight mb-6">
+              Timeless Pieces for a Fuller You
+            </h2>
+            <p class="font-sans text-sm sm:text-base text-cream/80 font-light leading-relaxed mb-8 max-w-md">
+              Crafted in collaboration with heritage family mills. Uncompromising texture, natural warmth, and quiet confidence.
+            </p>
+            <div class="flex flex-wrap items-center gap-4">
+              <a href="#signature-edit-section" class="btn-luxury-primary bg-cream text-espresso hover:bg-transparent hover:text-cream">
+                Explore Outerwear &nbsp;→
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Bottom Controls -->
+      <div class="absolute bottom-8 left-0 right-0 z-30">
+        <div class="luxury-container flex items-center justify-between text-cream">
+          <!-- Slide Numbers -->
+          <div class="flex items-center space-x-6 text-xs font-medium tracking-widest">
+            <button type="button" class="hero-indicator-btn border-b-2 border-cream pb-1 font-semibold opacity-100 transition-opacity" data-slide-index="0">01</button>
+            <button type="button" class="hero-indicator-btn pb-1 opacity-50 hover:opacity-90 transition-opacity" data-slide-index="1">02</button>
+            <button type="button" class="hero-indicator-btn pb-1 opacity-50 hover:opacity-90 transition-opacity" data-slide-index="2">03</button>
+          </div>
+
+          <!-- Slider Arrows -->
+          <div class="flex items-center space-x-3">
+            <button id="hero-prev-btn" type="button" class="p-2 border border-cream/30 hover:border-cream rounded-full transition-colors" aria-label="Previous Slide">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button id="hero-next-btn" type="button" class="p-2 border border-cream/30 hover:border-cream rounded-full transition-colors" aria-label="Next Slide">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         4. CURATED CATEGORIES (ALMADA LABEL & IMAGE 2/3 STRUCTURE)
+         ========================================================================== -->
+    <section id="category-grid-section" class="py-16 lg:py-24 border-b border-border-light">
+      <div class="luxury-container">
+        <div class="flex items-end justify-between mb-10">
+          <div>
+            <span class="text-xs uppercase tracking-brand text-text-muted block mb-2">Architectural Wardrobe</span>
+            <h2 class="font-serif text-3xl lg:text-4xl text-text-primary">Shop by Category</h2>
+          </div>
+          <button type="button" class="btn-luxury-link hidden sm:inline-flex" onclick="window.scrollToCategory('all')">
+            View All Categories &nbsp;→
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Coats -->
+          <div class="category-card group" onclick="window.scrollToCategory('coats')">
+            <div class="relative aspect-[3/4] overflow-hidden bg-bg-surface mb-3 rounded-sm">
+              <img 
+                src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=800&q=80" 
+                alt="Coats Collection" 
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-espresso/80 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
+              <div class="absolute bottom-5 left-5 right-5 text-cream">
+                <h3 class="font-serif text-2xl font-light mb-1">Coats</h3>
+                <span class="text-xs tracking-brand uppercase text-oat flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                  Shop Coats &nbsp;→
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Knitwear -->
+          <div class="category-card group" onclick="window.scrollToCategory('knitwear')">
+            <div class="relative aspect-[3/4] overflow-hidden bg-bg-surface mb-3 rounded-sm">
+              <img 
+                src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=800&q=80" 
+                alt="Knitwear Collection" 
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-espresso/80 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
+              <div class="absolute bottom-5 left-5 right-5 text-cream">
+                <h3 class="font-serif text-2xl font-light mb-1">Knitwear</h3>
+                <span class="text-xs tracking-brand uppercase text-oat flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                  Shop Knitwear &nbsp;→
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Essentials -->
+          <div class="category-card group" onclick="window.scrollToCategory('essentials')">
+            <div class="relative aspect-[3/4] overflow-hidden bg-bg-surface mb-3 rounded-sm">
+              <img 
+                src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=800&q=80" 
+                alt="Essentials Collection" 
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-espresso/80 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
+              <div class="absolute bottom-5 left-5 right-5 text-cream">
+                <h3 class="font-serif text-2xl font-light mb-1">Essentials</h3>
+                <span class="text-xs tracking-brand uppercase text-oat flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                  Shop Essentials &nbsp;→
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Accessories -->
+          <div class="category-card group" onclick="window.scrollToCategory('accessories')">
+            <div class="relative aspect-[3/4] overflow-hidden bg-bg-surface mb-3 rounded-sm">
+              <img 
+                src="https://images.unsplash.com/photo-1608256246200-53e635b5b65f?auto=format&fit=crop&w=800&q=80" 
+                alt="Accessories Collection" 
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-espresso/80 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
+              <div class="absolute bottom-5 left-5 right-5 text-cream">
+                <h3 class="font-serif text-2xl font-light mb-1">Accessories</h3>
+                <span class="text-xs tracking-brand uppercase text-oat flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                  Shop Accessories &nbsp;→
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         5. THE SIGNATURE EDIT / OUR ESSENTIALS (DYNAMIC PRODUCT GRID + SWATCHES)
+         ========================================================================== -->
+    <section id="signature-edit-section" class="py-16 lg:py-24">
+      <div class="luxury-container">
+        <!-- Section Header & Filters -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div>
+            <span class="text-xs uppercase tracking-brand text-text-muted block mb-2">Featured Collection</span>
+            <h2 class="font-serif text-3xl lg:text-5xl text-text-primary">The Signature Edit</h2>
+          </div>
+
+          <!-- Category Filter Pills -->
+          <div class="flex flex-wrap items-center gap-2 sm:gap-3 text-xs tracking-wider uppercase">
+            <button type="button" class="filter-pill-btn pb-1 border-b-2 border-text-primary font-semibold transition-colors" data-category="all">
+              All
+            </button>
+            <button type="button" class="filter-pill-btn pb-1 border-b-2 border-transparent opacity-70 hover:opacity-100 transition-colors" data-category="coats">
+              Coats
+            </button>
+            <button type="button" class="filter-pill-btn pb-1 border-b-2 border-transparent opacity-70 hover:opacity-100 transition-colors" data-category="knitwear">
+              Knitwear
+            </button>
+            <button type="button" class="filter-pill-btn pb-1 border-b-2 border-transparent opacity-70 hover:opacity-100 transition-colors" data-category="essentials">
+              Essentials
+            </button>
+            <button type="button" class="filter-pill-btn pb-1 border-b-2 border-transparent opacity-70 hover:opacity-100 transition-colors" data-category="accessories">
+              Accessories
+            </button>
+          </div>
+        </div>
+
+        <!-- Dynamic Product Grid rendered by app.js -->
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
+          <!-- Populated dynamically with color swatches & quick-add -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         6. INTERACTIVE CHOCOLATE PALETTE GUIDE (EXACT FROM IMAGE 1)
+         ========================================================================== -->
+    <section id="palette-section" class="py-20 bg-bg-secondary border-t border-b border-border-light">
+      <div class="luxury-container">
+        <div class="max-w-2xl mb-12">
+          <span class="text-xs uppercase tracking-brand text-text-muted block mb-2">Color Harmony</span>
+          <h2 class="font-serif text-3xl lg:text-4xl text-text-primary uppercase tracking-wide mb-3">
+            CHOCOLATE PALETTE
+          </h2>
+          <p class="text-xs sm:text-sm tracking-luxury uppercase text-text-muted font-medium">
+            RICH &nbsp;·&nbsp; WARM &nbsp;·&nbsp; TIMELESS &nbsp;·&nbsp; SOPHISTICATED
+          </p>
+        </div>
+
+        <!-- 8 Core Swatches Strip -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 mb-10">
+          <div class="palette-color-block p-4 rounded-sm cursor-pointer transition-transform hover:-translate-y-1 text-center" style="background-color: #EDE1D4; color: #241B17;" data-name="Cream" data-hex="#EDE1D4" data-desc="Illuminating neutral that brings crisp contrast and lightness.">
+            <span class="block text-xs font-semibold mb-1">Cream</span>
+            <span class="block text-[11px] font-mono opacity-80">#EDE1D4</span>
+          </div>
+
+          <div class="palette-color-block p-4 rounded-sm cursor-pointer transition-transform hover:-translate-y-1 text-center" style="background-color: #CBB89E; color: #241B17;" data-name="Oat" data-hex="#CBB89E" data-desc="Gentle Scandinavian warmth mimicking natural un-dyed fleece.">
+            <span class="block text-xs font-semibold mb-1">Oat</span>
+            <span class="block text-[11px] font-mono opacity-80">#CBB89E</span>
+          </div>
+
+          <div class="palette-color-block p-4 rounded-sm cursor-pointer transition-transform hover:-translate-y-1 text-center text-cream" style="background-color: #A8927B;" data-name="Taupe" data-hex="#A8927B" data-desc="Muted earth stone tone that grounds everyday styling effortlessly.">
+            <span class="block text-xs font-semibold mb-1">Taupe</span>
+            <span class="block text-[11px] font-mono opacity-80">#A8927B</span>
+          </div>
+
+          <div class="palette-color-block p-4 rounded-sm cursor-pointer transition-transform hover:-translate-y-1 text-center text-cream" style="background-color: #7B5A45;" data-name="Mocha" data-hex="#7B5A45" data-desc="Smooth roasted coffee tone with subtle cinnamon nuances.">
+            <span class="block text-xs font-semibold mb-1">Mocha</span>
+            <span class="block text-[11px] font-mono opacity-80">#7B5A45</span>
+          </div>
+
+          <div class="palette-color-block p-4 rounded-sm cursor-pointer transition-transform hover:-translate-y-1 text-center text-cream ring-2 ring-text-primary" style="background-color: #6A4735;" data-name="Chocolate" data-hex="#6A4735" data-desc="Our signature hue: Rich roasted cacao creating high-editorial elegance.">
+            <span class="block text-xs font-semibold mb-1">Chocolate</span>
+            <span class="block text-[11px] font-mono opacity-80">#6A4735</span>
+          </div>
+
+          <div class="palette-color-block p-4 rounded-sm cursor-pointer transition-transform hover:-translate-y-1 text-center text-cream" style="background-color: #3E2B23;" data-name="Dark Chocolate" data-hex="#3E2B23" data-desc="Deep velvety brown replacing traditional black with organic richness.">
+            <span class="block text-xs font-semibold mb-1">Dark Choc</span>
+            <span class="block text-[11px] font-mono opacity-80">#3E2B23</span>
+          </div>
+
+          <div class="palette-color-block p-4 rounded-sm cursor-pointer transition-transform hover:-translate-y-1 text-center text-cream" style="background-color: #241B17;" data-name="Espresso" data-hex="#241B17" data-desc="The deepest roasted tone for heavy outerwear and tailored overcoats.">
+            <span class="block text-xs font-semibold mb-1">Espresso</span>
+            <span class="block text-[11px] font-mono opacity-80">#241B17</span>
+          </div>
+
+          <div class="palette-color-block p-4 rounded-sm cursor-pointer transition-transform hover:-translate-y-1 text-center text-cream" style="background-color: #AB664F;" data-name="Camel" data-hex="#AB664F" data-desc="Heritage warmth reminiscent of timeless vicuña wool and desert dunes.">
+            <span class="block text-xs font-semibold mb-1">Camel</span>
+            <span class="block text-[11px] font-mono opacity-80">#AB664F</span>
+          </div>
+        </div>
+
+        <!-- Selected Swatch Inspector Box -->
+        <div class="p-6 bg-bg-primary border border-border-light rounded-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-12">
+          <div>
+            <span class="text-[10px] tracking-brand uppercase text-text-muted">Selected Shade (Click any swatch above to copy hex)</span>
+            <div class="flex items-center gap-3 mt-1">
+              <h3 id="palette-info-name" class="font-serif text-2xl text-text-primary">Chocolate</h3>
+              <span id="palette-info-hex" class="px-2 py-0.5 text-xs font-mono bg-bg-surface border border-border-strong text-text-secondary">#6A4735</span>
+            </div>
+            <p id="palette-info-desc" class="text-xs text-text-secondary mt-1 font-light">
+              Our signature hue: Rich roasted cacao creating high-editorial elegance.
+            </p>
+          </div>
+          <button type="button" class="btn-luxury-outline text-xs py-2 px-5" onclick="window.scrollToCategory('all')">
+            Shop This Shade &nbsp;→
+          </button>
+        </div>
+
+        <!-- Color Combinations (Direct from Image 1) -->
+        <div>
+          <h3 class="text-xs uppercase tracking-brand text-text-muted mb-4">Curated Color Combinations</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Chocolate & Cream -->
+            <div class="pairing-card p-4 bg-bg-primary border border-border-light rounded-sm cursor-pointer hover:border-text-primary transition-all" data-pairing-title="Chocolate & Cream">
+              <div class="flex h-12 rounded-sm overflow-hidden mb-3 border border-border-light">
+                <div class="w-1/2 h-full" style="background-color: #6A4735;"></div>
+                <div class="w-1/2 h-full" style="background-color: #EDE1D4;"></div>
+              </div>
+              <h4 class="font-serif text-base text-text-primary">Chocolate & Cream</h4>
+              <p class="text-xs text-text-muted mt-0.5">Elegant &nbsp;·&nbsp; Classic</p>
+            </div>
+
+            <!-- Chocolate & Taupe -->
+            <div class="pairing-card p-4 bg-bg-primary border border-border-light rounded-sm cursor-pointer hover:border-text-primary transition-all" data-pairing-title="Chocolate & Taupe">
+              <div class="flex h-12 rounded-sm overflow-hidden mb-3 border border-border-light">
+                <div class="w-1/2 h-full" style="background-color: #6A4735;"></div>
+                <div class="w-1/2 h-full" style="background-color: #A8927B;"></div>
+              </div>
+              <h4 class="font-serif text-base text-text-primary">Chocolate & Taupe</h4>
+              <p class="text-xs text-text-muted mt-0.5">Warm &nbsp;·&nbsp; Everyday</p>
+            </div>
+
+            <!-- Chocolate & Black -->
+            <div class="pairing-card p-4 bg-bg-primary border border-border-light rounded-sm cursor-pointer hover:border-text-primary transition-all" data-pairing-title="Chocolate & Black">
+              <div class="flex h-12 rounded-sm overflow-hidden mb-3 border border-border-light">
+                <div class="w-1/2 h-full" style="background-color: #3E2B23;"></div>
+                <div class="w-1/2 h-full" style="background-color: #1E1A16;"></div>
+              </div>
+              <h4 class="font-serif text-base text-text-primary">Chocolate & Black</h4>
+              <p class="text-xs text-text-muted mt-0.5">Modern &nbsp;·&nbsp; Refined</p>
+            </div>
+
+            <!-- Chocolate & Camel -->
+            <div class="pairing-card p-4 bg-bg-primary border border-border-light rounded-sm cursor-pointer hover:border-text-primary transition-all" data-pairing-title="Chocolate & Camel">
+              <div class="flex h-12 rounded-sm overflow-hidden mb-3 border border-border-light">
+                <div class="w-1/2 h-full" style="background-color: #6A4735;"></div>
+                <div class="w-1/2 h-full" style="background-color: #AB664F;"></div>
+              </div>
+              <h4 class="font-serif text-base text-text-primary">Chocolate & Camel</h4>
+              <p class="text-xs text-text-muted mt-0.5">Rich &nbsp;·&nbsp; Luxurious</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         7. BRAND PHILOSOPHY & STORYTELLING ("LESS, BUT BETTER" - ALMADA & LORO PIANA)
+         ========================================================================== -->
+    <section id="philosophy-section" class="py-20 lg:py-28">
+      <div class="luxury-container">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          
+          <!-- Story Left (Image 2 style) -->
+          <div class="relative">
+            <div class="aspect-[4/5] bg-bg-surface overflow-hidden rounded-sm relative">
+              <img 
+                src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=85" 
+                alt="Woman in Reykjavik Coat" 
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <div class="mt-6">
+              <span class="text-xs uppercase tracking-brand text-text-muted block mb-2">Our Origins</span>
+              <h3 class="font-serif text-3xl text-text-primary mb-3">Designed for Real Life</h3>
+              <p class="text-xs sm:text-sm text-text-secondary leading-relaxed font-light mb-6">
+                Elevated essentials for modern days — navigating Reykjavik's brisk harborside winds, relaxing at home, and everywhere in between. Every coat is cut with generous room for layered knitwear without compromising an effortless, tailored silhouette.
+              </p>
+              <a href="#signature-edit-section" class="btn-luxury-link">
+                Our Story &nbsp;→
+              </a>
+            </div>
+          </div>
+
+          <!-- Story Right (Loro Piana Philosophy) -->
+          <div class="relative lg:pt-16">
+            <div class="aspect-[4/5] bg-bg-surface overflow-hidden rounded-sm relative mb-6">
+              <img 
+                src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1200&q=85" 
+                alt="Atelier and Still Life" 
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <div>
+              <span class="text-xs uppercase tracking-brand text-text-muted block mb-2">Nordic Philosophy</span>
+              <h3 class="font-serif text-3xl text-text-primary mb-3">Less, but Better.</h3>
+              <p class="text-xs sm:text-sm text-text-secondary leading-relaxed font-light mb-6">
+                Better materials. More intention. A longer life. We partner exclusively with certified heritage spinning mills that honor sustainable farming and the natural lifecycle of animal fibers. By choosing rare Grade-A cashmere and virgin wool, our pieces develop character with every winter.
+              </p>
+              <a href="#materials-section" class="btn-luxury-link">
+                Our Philosophy &nbsp;→
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         8. TACTILE MATERIAL SHOWCASE ("THE BEAUTY IN NATURAL MATERIALS" - LORO PIANA)
+         ========================================================================== -->
+    <section id="materials-section" class="relative py-24 lg:py-32 bg-darkchoc text-cream overflow-hidden">
+      <!-- Background Macro Texture Image -->
+      <div class="absolute inset-0 z-0">
+        <img 
+          src="https://images.unsplash.com/photo-1584030373081-f37b7bb4fa8e?auto=format&fit=crop&w=2000&q=85" 
+          alt="Tactile Cashmere Weave Texture" 
+          class="w-full h-full object-cover opacity-35 mix-blend-overlay"
+        />
+        <div class="absolute inset-0 bg-gradient-to-r from-espresso via-espresso/80 to-transparent"></div>
+      </div>
+
+      <div class="luxury-container relative z-10">
+        <div class="max-w-2xl">
+          <span class="text-xs uppercase tracking-brand text-oat block mb-4">Provenance & Textiles</span>
+          <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-light mb-6 leading-tight">
+            The Beauty in Natural Materials
+          </h2>
+          <p class="text-sm sm:text-base text-cream/80 font-light leading-relaxed mb-8">
+            From the cloud-like softness of inner Mongolian cashmere to the elemental resilience of Icelandic sheep's wool, every fiber is selected for longevity, warmth, and enduring natural elegance.
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6 border-t border-cream/20 mb-10">
+            <div>
+              <h4 class="font-serif text-xl text-oat mb-1">14.5 µm</h4>
+              <p class="text-xs text-cream/70">Grade-A Mongolian Cashmere Combing</p>
+            </div>
+            <div>
+              <h4 class="font-serif text-xl text-oat mb-1">100% Traceable</h4>
+              <p class="text-xs text-cream/70">Ethical Nomadic Herding Partnerships</p>
+            </div>
+            <div>
+              <h4 class="font-serif text-xl text-oat mb-1">Sub-Arctic Proof</h4>
+              <p class="text-xs text-cream/70">Naturally Water-Repellent Lopi Wool</p>
+            </div>
+          </div>
+
+          <a href="#signature-edit-section" class="btn-luxury-primary bg-cream text-espresso hover:bg-transparent hover:text-cream">
+            Our Materials &nbsp;→
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         9. REYKJAVÍK JOURNAL & EDITORIAL ARTICLES
+         ========================================================================== -->
+    <section id="journal-section" class="py-20 lg:py-28 border-b border-border-light">
+      <div class="luxury-container">
+        <div class="flex items-end justify-between mb-12">
+          <div>
+            <span class="text-xs uppercase tracking-brand text-text-muted block mb-2">Editorial Stories</span>
+            <h2 class="font-serif text-3xl lg:text-4xl text-text-primary">Journal</h2>
+          </div>
+          <a href="#journal-section" class="btn-luxury-link hidden sm:inline-flex">
+            Read All Articles &nbsp;→
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Article 1 -->
+          <article class="group cursor-pointer">
+            <div class="aspect-[4/3] bg-bg-surface overflow-hidden rounded-sm mb-4">
+              <img 
+                src="https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=800&q=80" 
+                alt="Style into the New Season" 
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                loading="lazy"
+              />
+            </div>
+            <span class="text-[10px] uppercase tracking-brand text-text-muted block mb-1">Transitional Dressing</span>
+            <h3 class="font-serif text-xl text-text-primary group-hover:opacity-80 transition-opacity mb-2 leading-snug">
+              Style into the New Season: A Reykjavík Guide
+            </h3>
+            <p class="text-xs text-text-secondary font-light leading-relaxed mb-3">
+              Mastering the art of layering delicate knitwear with architectural overcoats against changing sub-arctic weather.
+            </p>
+            <span class="text-xs tracking-wider uppercase text-text-muted group-hover:text-text-primary transition-colors flex items-center gap-1">
+              Read Story &nbsp;→
+            </span>
+          </article>
+
+          <!-- Article 2 -->
+          <article class="group cursor-pointer">
+            <div class="aspect-[4/3] bg-bg-surface overflow-hidden rounded-sm mb-4">
+              <img 
+                src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=800&q=80" 
+                alt="Considered Wardrobe" 
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                loading="lazy"
+              />
+            </div>
+            <span class="text-[10px] uppercase tracking-brand text-text-muted block mb-1">Wardrobe Theory</span>
+            <h3 class="font-serif text-xl text-text-primary group-hover:opacity-80 transition-opacity mb-2 leading-snug">
+              The Art of a Considered Wardrobe
+            </h3>
+            <p class="text-xs text-text-secondary font-light leading-relaxed mb-3">
+              Why curating seven foundational pieces in rich chocolate and warm oat creates effortless daily versatility.
+            </p>
+            <span class="text-xs tracking-wider uppercase text-text-muted group-hover:text-text-primary transition-colors flex items-center gap-1">
+              Read Story &nbsp;→
+            </span>
+          </article>
+
+          <!-- Article 3 -->
+          <article class="group cursor-pointer">
+            <div class="aspect-[4/3] bg-bg-surface overflow-hidden rounded-sm mb-4">
+              <img 
+                src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80" 
+                alt="City to Countryside" 
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                loading="lazy"
+              />
+            </div>
+            <span class="text-[10px] uppercase tracking-brand text-text-muted block mb-1">Destination & Life</span>
+            <h3 class="font-serif text-xl text-text-primary group-hover:opacity-80 transition-opacity mb-2 leading-snug">
+              From City to Coast: The Nordic Path
+            </h3>
+            <p class="text-xs text-text-secondary font-light leading-relaxed mb-3">
+              How our tailored garments transition effortlessly from meetings in Reykjavík to coastal weekend retreats.
+            </p>
+            <span class="text-xs tracking-wider uppercase text-text-muted group-hover:text-text-primary transition-colors flex items-center gap-1">
+              Read Story &nbsp;→
+            </span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         10. FLAGSHIP ATELIER & APPOINTMENTS (REYKJAVÍK)
+         ========================================================================== -->
+    <section id="boutique-section" class="py-16 bg-bg-secondary">
+      <div class="luxury-container">
+        <div class="max-w-3xl mx-auto text-center">
+          <span class="text-xs uppercase tracking-brand text-text-muted block mb-2">Flagship Experience</span>
+          <h2 class="font-serif text-3xl lg:text-4xl text-text-primary mb-4">
+            Visit Our Reykjavík Atelier
+          </h2>
+          <p class="text-xs sm:text-sm text-text-secondary font-light leading-relaxed mb-6">
+            Located in the historic heart of Reykjavík at Laugavegur 42. Experience tactile fabric consultations, bespoke hem tailoring, and private salon viewings accompanied by artisanal warm tea.
+          </p>
+          <div class="flex flex-wrap justify-center gap-4 text-xs tracking-wider uppercase">
+            <span class="px-3 py-1 bg-bg-primary border border-border-light">Mon – Sat: 11:00 – 18:00</span>
+            <span class="px-3 py-1 bg-bg-primary border border-border-light">+354 555 4200</span>
+            <span class="px-3 py-1 bg-bg-primary border border-border-light">concierge@formeli.is</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         11. VIP NEWSLETTER ("STAY IN TOUCH" - FROM IMAGE 2 & 3)
+         ========================================================================== -->
+    <section class="py-16 border-t border-border-light bg-bg-primary">
+      <div class="luxury-container">
+        <div class="flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div>
+            <h3 class="font-serif text-2xl lg:text-3xl text-text-primary mb-2">
+              Stay in Touch
+            </h3>
+            <p class="text-xs text-text-secondary font-light">
+              Be the first to know about new collections, private salon viewings, and textile stories. Receive 10% off your inaugural order with code <span class="font-mono font-medium text-text-primary">WELCOME10</span>.
+            </p>
+          </div>
+
+          <!-- Subscription Form -->
+          <form id="newsletter-form" class="w-full lg:max-w-md flex items-center border-b border-border-strong pb-2">
+            <input 
+              type="email" 
+              id="newsletter-email" 
+              placeholder="Your email address" 
+              required
+              class="w-full bg-transparent text-text-primary text-xs focus:outline-none placeholder:text-text-muted"
+            />
+            <button type="submit" class="text-xs tracking-wider uppercase font-semibold text-text-primary hover:opacity-75 transition-opacity pl-4 whitespace-nowrap">
+              Subscribe &nbsp;→
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       12. LUXURY SCANDINAVIAN FOOTER (FROM IMAGE 2 & 3)
+       ========================================================================== -->
+  <footer class="bg-espresso text-cream pt-16 pb-12 border-t border-border-light text-xs font-light">
+    <div class="luxury-container">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-16">
+        
+        <!-- Brand column -->
+        <div class="lg:col-span-2">
+          <h2 class="font-serif text-2xl tracking-brand uppercase mb-4 text-cream">
+            FORMÉLI & CO.
+          </h2>
+          <p class="text-xs text-oat/80 leading-relaxed max-w-sm mb-6">
+            Nordic luxury rooted in sub-arctic craftsmanship. Hand-finished coats, cashmere knitwear, and timeless wardrobe essentials made to endure.
+          </p>
+          <div class="text-[11px] text-oat/60 space-y-1">
+            <p>Atelier & Boutique: Laugavegur 42, 101 Reykjavík, Iceland</p>
+            <p>Customer Service: +354 555 4200 (GMT)</p>
+          </div>
+        </div>
+
+        <!-- Shop Links -->
+        <div>
+          <h4 class="font-serif text-sm uppercase tracking-brand text-oat mb-4 font-normal">Shop</h4>
+          <ul class="space-y-2.5 text-xs text-cream/70">
+            <li><a href="#signature-edit-section" class="hover:text-cream transition-colors" onclick="window.scrollToCategory('all')">New In</a></li>
+            <li><a href="#signature-edit-section" class="hover:text-cream transition-colors" onclick="window.scrollToCategory('coats')">Coats & Outerwear</a></li>
+            <li><a href="#signature-edit-section" class="hover:text-cream transition-colors" onclick="window.scrollToCategory('knitwear')">Cashmere Knitwear</a></li>
+            <li><a href="#signature-edit-section" class="hover:text-cream transition-colors" onclick="window.scrollToCategory('essentials')">Tailored Essentials</a></li>
+            <li><a href="#signature-edit-section" class="hover:text-cream transition-colors" onclick="window.scrollToCategory('accessories')">Accessories</a></li>
+          </ul>
+        </div>
+
+        <!-- About Links -->
+        <div>
+          <h4 class="font-serif text-sm uppercase tracking-brand text-oat mb-4 font-normal">About</h4>
+          <ul class="space-y-2.5 text-xs text-cream/70">
+            <li><a href="#philosophy-section" class="hover:text-cream transition-colors">Our Story</a></li>
+            <li><a href="#materials-section" class="hover:text-cream transition-colors">Natural Materials</a></li>
+            <li><a href="#materials-section" class="hover:text-cream transition-colors">Sustainability & Ethics</a></li>
+            <li><a href="#boutique-section" class="hover:text-cream transition-colors">Reykjavík Flagship</a></li>
+            <li><a href="#journal-section" class="hover:text-cream transition-colors">Journal</a></li>
+          </ul>
+        </div>
+
+        <!-- Client Care -->
+        <div>
+          <h4 class="font-serif text-sm uppercase tracking-brand text-oat mb-4 font-normal">Client Care</h4>
+          <ul class="space-y-2.5 text-xs text-cream/70">
+            <li><a href="#" class="hover:text-cream transition-colors" onclick="alert('Complimentary DHL Express on orders over €300 worldwide with all import taxes prepaid.')">Shipping & Duties</a></li>
+            <li><a href="#" class="hover:text-cream transition-colors" onclick="alert('30-day return window. Prepaid return labels provided inside each parcel.')">Returns & Exchanges</a></li>
+            <li><a href="#" class="hover:text-cream transition-colors" onclick="alert('Care Guide: Always air wool garments naturally. Hand wash cashmere in cool water with specialized pH-neutral wool cleanser.')">Garment Care</a></li>
+            <li><a href="#boutique-section" class="hover:text-cream transition-colors">Private Fittings</a></li>
+            <li><a href="mailto:concierge@formeli.is" class="hover:text-cream transition-colors">Contact Concierge</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="pt-8 border-t border-cream/15 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-oat/70">
+        <div>
+          © 2026 FORMÉLI & CO. All rights reserved. Reykjavík, Iceland.
+        </div>
+        <div class="flex items-center space-x-6">
+          <a href="#" class="hover:text-cream transition-colors">Terms</a>
+          <a href="#" class="hover:text-cream transition-colors">Privacy</a>
+          <a href="#" class="hover:text-cream transition-colors">Cookies</a>
+          <a href="#" class="hover:text-cream transition-colors">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       13. SLIDE-OUT SHOPPING BAG (MINI CART DRAWER)
+       ========================================================================== -->
+  <div id="cart-backdrop" class="drawer-backdrop"></div>
+  <aside id="cart-drawer" class="drawer-panel" aria-label="Shopping Bag">
+    <!-- Drawer Header -->
+    <div class="p-6 border-b border-border-light flex items-center justify-between">
+      <div>
+        <h3 class="font-serif text-xl tracking-brand uppercase text-text-primary">Shopping Bag</h3>
+        <span class="text-[11px] text-text-muted tracking-wider uppercase">Forméli & Co. Atelier</span>
+      </div>
+      <button id="close-cart-btn" type="button" class="text-text-primary p-2 text-xl hover:opacity-75 transition-opacity" aria-label="Close Bag">✕</button>
+    </div>
+
+    <!-- Free Shipping Progress -->
+    <div class="px-6 py-3 bg-bg-secondary border-b border-border-light text-[11px]">
+      <p id="free-shipping-text" class="text-text-secondary mb-1.5 font-light">
+        Add <strong>45.000 kr</strong> more to unlock Complimentary Worldwide Shipping.
+      </p>
+      <div class="w-full bg-border-strong h-1 rounded-full overflow-hidden">
+        <div id="free-shipping-bar" class="bg-accent-chocolate h-full transition-all duration-500" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <!-- Cart Items Scroll Area -->
+    <div class="flex-1 overflow-y-auto p-6 space-y-4">
+      <div id="cart-empty-state" class="text-center py-16 space-y-4">
+        <svg class="w-10 h-10 mx-auto text-text-muted opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+        </svg>
+        <p class="font-serif text-lg text-text-primary">Your bag is currently empty.</p>
+        <p class="text-xs text-text-muted max-w-xs mx-auto">Explore our signature knitwear and coats crafted for timeless warmth.</p>
+        <button type="button" class="btn-luxury-primary text-xs py-2.5 px-6" onclick="closeCartDrawer(); window.scrollToCategory('all')">
+          Explore The Edit
+        </button>
+      </div>
+
+      <div id="cart-items-container" class="space-y-2 hidden">
+        <!-- Injected dynamically by app.js -->
+      </div>
+    </div>
+
+    <!-- Drawer Footer -->
+    <div class="p-6 border-t border-border-light bg-bg-surface space-y-4">
+      <!-- Promo Code -->
+      <div class="flex items-center gap-2">
+        <input 
+          type="text" 
+          id="promo-code-input" 
+          placeholder="Promo code (e.g. WELCOME10)" 
+          class="flex-1 bg-bg-primary border border-border-strong px-3 py-2 text-xs text-text-primary focus:outline-none uppercase placeholder:normal-case placeholder:text-text-muted"
+        />
+        <button id="apply-promo-btn" type="button" class="btn-luxury-outline text-[11px] py-2 px-3 whitespace-nowrap">
+          Apply
+        </button>
+      </div>
+      <div id="promo-feedback"></div>
+
+      <!-- Subtotal -->
+      <div class="flex items-center justify-between text-sm pt-2">
+        <span class="text-text-muted uppercase tracking-wider text-xs">Subtotal</span>
+        <span id="cart-subtotal" class="font-medium text-text-primary text-base">€0</span>
+      </div>
+
+      <p class="text-[10px] text-text-muted font-light leading-snug">
+        Taxes and customs duties calculated based on destination. Complimentary signature packaging with tissue and ribbon included.
+      </p>
+
+      <button id="cart-checkout-btn" type="button" class="btn-luxury-primary w-full py-3.5 tracking-brand font-semibold text-xs">
+        Proceed to Checkout &nbsp;→
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==========================================================================
+       14. PRODUCT QUICK VIEW MODAL
+       ========================================================================== -->
+  <div id="quick-view-backdrop" class="drawer-backdrop"></div>
+  <div id="quick-view-modal" class="modal-container" role="dialog" aria-modal="true">
+    <div class="modal-box rounded-sm">
+      <button id="close-quick-view-btn" type="button" class="absolute top-4 right-4 z-20 text-text-primary p-2 text-xl hover:opacity-75 transition-opacity" aria-label="Close">✕</button>
+      <div id="quick-view-modal-content">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       15. LIVE SEARCH DRAWER / MODAL
+       ========================================================================== -->
+  <div id="search-backdrop" class="drawer-backdrop"></div>
+  <div id="search-modal" class="modal-container">
+    <div class="modal-box max-w-xl p-6 bg-bg-primary rounded-sm">
+      <div class="flex items-center justify-between pb-4 border-b border-border-light">
+        <span class="font-serif text-lg text-text-primary">Search FORMÉLI & CO.</span>
+        <button id="close-search-btn" type="button" class="text-text-primary text-xl p-1" aria-label="Close search">✕</button>
+      </div>
+      <div class="mt-4 relative">
+        <input 
+          id="luxury-search-input"
+          type="text" 
+          placeholder="Search cashmere, wool coats, trousers..."
+          class="w-full bg-bg-surface border border-border-strong px-4 py-3 text-sm text-text-primary focus:outline-none placeholder:text-text-muted rounded-sm"
+        />
+      </div>
+      <div id="search-results-container" class="mt-4 max-h-72 overflow-y-auto space-y-2">
+        <div class="py-6 text-center text-xs text-text-muted">
+          Type to search pieces, materials, or collections...
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       16. FLOATING TOAST NOTIFICATION
+       ========================================================================== -->
+  <div id="luxury-toast" class="toast-notice rounded-sm" role="status">
+    <svg class="w-4 h-4 text-accent-chocolate" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+    </svg>
+    <span class="toast-text font-serif text-sm">Item added to your bag</span>
+  </div>
+
+  <!-- Scripts -->
+  <script src="products.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
