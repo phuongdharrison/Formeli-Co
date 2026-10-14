@@ -167,7 +167,6 @@
         <a href="#category-grid-section" onclick="document.getElementById('mobile-drawer').classList.remove('active'); window.scrollToCategory('knitwear')">Knitwear</a>
         <a href="#category-grid-section" onclick="document.getElementById('mobile-drawer').classList.remove('active'); window.scrollToCategory('essentials')">Essentials</a>
         <a href="#materials-section" onclick="document.getElementById('mobile-drawer').classList.remove('active')">The Beauty in Natural Materials</a>
-        <a href="#palette-section" onclick="document.getElementById('mobile-drawer').classList.remove('active')">Chocolate Palette Guide</a>
         <a href="#journal-section" onclick="document.getElementById('mobile-drawer').classList.remove('active')">Reykjavík Journal</a>
       </div>
     </div>
@@ -421,128 +420,7 @@
       </div>
     </section>
 
-    <!-- ==========================================================================
-         6. INTERACTIVE CHOCOLATE PALETTE GUIDE (EXACT FROM IMAGE 1)
-         ========================================================================== -->
-    <section id="palette-section" class="py-20 bg-bg-secondary border-t border-b border-border-light">
-      <div class="luxury-container">
-        <div class="max-w-2xl mb-12">
-          <span class="text-xs uppercase tracking-brand text-text-muted block mb-2">Color Harmony</span>
-          <h2 class="font-serif text-3xl lg:text-4xl text-text-primary uppercase tracking-wide mb-3">
-            CHOCOLATE PALETTE
-          </h2>
-          <p class="text-xs sm:text-sm tracking-luxury uppercase text-text-muted font-medium">
-            RICH &nbsp;·&nbsp; WARM &nbsp;·&nbsp; TIMELESS &nbsp;·&nbsp; SOPHISTICATED
-          </p>
-        </div>
 
-        <!-- 8 Core Swatches Strip -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 mb-10">
-          <div class="palette-color-block p-4 rounded-sm cursor-pointer transition-transform hover:-translate-y-1 text-center" style="background-color: #EDE1D4; color: #241B17;" data-name="Cream" data-hex="#EDE1D4" data-desc="Illuminating neutral that brings crisp contrast and lightness.">
-            <span class="block text-xs font-semibold mb-1">Cream</span>
-            <span class="block text-[11px] font-mono opacity-80">#EDE1D4</span>
-          </div>
-
-          <div class="palette-color-block p-4 rounded-sm cursor-pointer transition-transform hover:-translate-y-1 text-center" style="background-color: #CBB89E; color: #241B17;" data-name="Oat" data-hex="#CBB89E" data-desc="Gentle Scandinavian warmth mimicking natural un-dyed fleece.">
-            <span class="block text-xs font-semibold mb-1">Oat</span>
-            <span class="block text-[11px] font-mono opacity-80">#CBB89E</span>
-          </div>
-
-          <div class="palette-color-block p-4 rounded-sm cursor-pointer transition-transform hover:-translate-y-1 text-center text-cream" style="background-color: #A8927B;" data-name="Taupe" data-hex="#A8927B" data-desc="Muted earth stone tone that grounds everyday styling effortlessly.">
-            <span class="block text-xs font-semibold mb-1">Taupe</span>
-            <span class="block text-[11px] font-mono opacity-80">#A8927B</span>
-          </div>
-
-          <div class="palette-color-block p-4 rounded-sm cursor-pointer transition-transform hover:-translate-y-1 text-center text-cream" style="background-color: #7B5A45;" data-name="Mocha" data-hex="#7B5A45" data-desc="Smooth roasted coffee tone with subtle cinnamon nuances.">
-            <span class="block text-xs font-semibold mb-1">Mocha</span>
-            <span class="block text-[11px] font-mono opacity-80">#7B5A45</span>
-          </div>
-
-          <div class="palette-color-block p-4 rounded-sm cursor-pointer transition-transform hover:-translate-y-1 text-center text-cream ring-2 ring-text-primary" style="background-color: #6A4735;" data-name="Chocolate" data-hex="#6A4735" data-desc="Our signature hue: Rich roasted cacao creating high-editorial elegance.">
-            <span class="block text-xs font-semibold mb-1">Chocolate</span>
-            <span class="block text-[11px] font-mono opacity-80">#6A4735</span>
-          </div>
-
-          <div class="palette-color-block p-4 rounded-sm cursor-pointer transition-transform hover:-translate-y-1 text-center text-cream" style="background-color: #3E2B23;" data-name="Dark Chocolate" data-hex="#3E2B23" data-desc="Deep velvety brown replacing traditional black with organic richness.">
-            <span class="block text-xs font-semibold mb-1">Dark Choc</span>
-            <span class="block text-[11px] font-mono opacity-80">#3E2B23</span>
-          </div>
-
-          <div class="palette-color-block p-4 rounded-sm cursor-pointer transition-transform hover:-translate-y-1 text-center text-cream" style="background-color: #241B17;" data-name="Espresso" data-hex="#241B17" data-desc="The deepest roasted tone for heavy outerwear and tailored overcoats.">
-            <span class="block text-xs font-semibold mb-1">Espresso</span>
-            <span class="block text-[11px] font-mono opacity-80">#241B17</span>
-          </div>
-
-          <div class="palette-color-block p-4 rounded-sm cursor-pointer transition-transform hover:-translate-y-1 text-center text-cream" style="background-color: #AB664F;" data-name="Camel" data-hex="#AB664F" data-desc="Heritage warmth reminiscent of timeless vicuña wool and desert dunes.">
-            <span class="block text-xs font-semibold mb-1">Camel</span>
-            <span class="block text-[11px] font-mono opacity-80">#AB664F</span>
-          </div>
-        </div>
-
-        <!-- Selected Swatch Inspector Box -->
-        <div class="p-6 bg-bg-primary border border-border-light rounded-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-12">
-          <div>
-            <span class="text-[10px] tracking-brand uppercase text-text-muted">Selected Shade (Click any swatch above to copy hex)</span>
-            <div class="flex items-center gap-3 mt-1">
-              <h3 id="palette-info-name" class="font-serif text-2xl text-text-primary">Chocolate</h3>
-              <span id="palette-info-hex" class="px-2 py-0.5 text-xs font-mono bg-bg-surface border border-border-strong text-text-secondary">#6A4735</span>
-            </div>
-            <p id="palette-info-desc" class="text-xs text-text-secondary mt-1 font-light">
-              Our signature hue: Rich roasted cacao creating high-editorial elegance.
-            </p>
-          </div>
-          <button type="button" class="btn-luxury-outline text-xs py-2 px-5" onclick="window.scrollToCategory('all')">
-            Shop This Shade &nbsp;→
-          </button>
-        </div>
-
-        <!-- Color Combinations (Direct from Image 1) -->
-        <div>
-          <h3 class="text-xs uppercase tracking-brand text-text-muted mb-4">Curated Color Combinations</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <!-- Chocolate & Cream -->
-            <div class="pairing-card p-4 bg-bg-primary border border-border-light rounded-sm cursor-pointer hover:border-text-primary transition-all" data-pairing-title="Chocolate & Cream">
-              <div class="flex h-12 rounded-sm overflow-hidden mb-3 border border-border-light">
-                <div class="w-1/2 h-full" style="background-color: #6A4735;"></div>
-                <div class="w-1/2 h-full" style="background-color: #EDE1D4;"></div>
-              </div>
-              <h4 class="font-serif text-base text-text-primary">Chocolate & Cream</h4>
-              <p class="text-xs text-text-muted mt-0.5">Elegant &nbsp;·&nbsp; Classic</p>
-            </div>
-
-            <!-- Chocolate & Taupe -->
-            <div class="pairing-card p-4 bg-bg-primary border border-border-light rounded-sm cursor-pointer hover:border-text-primary transition-all" data-pairing-title="Chocolate & Taupe">
-              <div class="flex h-12 rounded-sm overflow-hidden mb-3 border border-border-light">
-                <div class="w-1/2 h-full" style="background-color: #6A4735;"></div>
-                <div class="w-1/2 h-full" style="background-color: #A8927B;"></div>
-              </div>
-              <h4 class="font-serif text-base text-text-primary">Chocolate & Taupe</h4>
-              <p class="text-xs text-text-muted mt-0.5">Warm &nbsp;·&nbsp; Everyday</p>
-            </div>
-
-            <!-- Chocolate & Black -->
-            <div class="pairing-card p-4 bg-bg-primary border border-border-light rounded-sm cursor-pointer hover:border-text-primary transition-all" data-pairing-title="Chocolate & Black">
-              <div class="flex h-12 rounded-sm overflow-hidden mb-3 border border-border-light">
-                <div class="w-1/2 h-full" style="background-color: #3E2B23;"></div>
-                <div class="w-1/2 h-full" style="background-color: #1E1A16;"></div>
-              </div>
-              <h4 class="font-serif text-base text-text-primary">Chocolate & Black</h4>
-              <p class="text-xs text-text-muted mt-0.5">Modern &nbsp;·&nbsp; Refined</p>
-            </div>
-
-            <!-- Chocolate & Camel -->
-            <div class="pairing-card p-4 bg-bg-primary border border-border-light rounded-sm cursor-pointer hover:border-text-primary transition-all" data-pairing-title="Chocolate & Camel">
-              <div class="flex h-12 rounded-sm overflow-hidden mb-3 border border-border-light">
-                <div class="w-1/2 h-full" style="background-color: #6A4735;"></div>
-                <div class="w-1/2 h-full" style="background-color: #AB664F;"></div>
-              </div>
-              <h4 class="font-serif text-base text-text-primary">Chocolate & Camel</h4>
-              <p class="text-xs text-text-muted mt-0.5">Rich &nbsp;·&nbsp; Luxurious</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- ==========================================================================
          7. BRAND PHILOSOPHY & STORYTELLING ("LESS, BUT BETTER" - ALMADA & LORO PIANA)
@@ -852,7 +730,7 @@
           <a href="#" class="hover:text-cream transition-colors">Terms</a>
           <a href="#" class="hover:text-cream transition-colors">Privacy</a>
           <a href="#" class="hover:text-cream transition-colors">Cookies</a>
-          <a href="#" class="hover:text-cream transition-colors">Accessibility</a>
+          <a href="/admin" target="_blank" class="hover:text-cream text-oat/90 font-medium transition-colors">Atelier CMS ⚙</a>
         </div>
       </div>
     </div>

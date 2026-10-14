@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FORMÉLI & CO. — Atelier CMS Portal</title>
+  <meta name="description" content="Hệ thống quản trị nội dung website Forméli & Co. (Reykjavík, Iceland)">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            espresso: '#241B17',
+            darkchoc: '#3E2B23',
+            chocolate: '#6A4735',
+            mocha: '#7B5A45',
+            taupe: '#A8927B',
+            oat: '#CBB89E',
+            cream: '#EDE1D4',
+            camel: '#AB664F',
+            nordicblack: '#1E1A16',
+            adminbg: '#F8F7F4'
+          },
+          fontFamily: {
+            serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-adminbg text-espresso font-sans antialiased min-h-screen flex">
+
+  <!-- ==========================================================================
+       SIDEBAR NAVIGATION
+       ========================================================================== -->
+  <aside class="w-64 bg-espresso text-cream flex flex-col justify-between shrink-0 min-h-screen border-r border-darkchoc sticky top-0 h-screen z-30">
+    <div>
+      <!-- Brand Logo Header -->
+      <div class="p-6 border-b border-darkchoc flex flex-col">
+        <a href="/" target="_blank" class="block group">
+          <h1 class="font-serif text-xl tracking-brand uppercase text-cream leading-tight">
+            FORMÉLI & CO.
+          </h1>
+          <span class="text-[9px] tracking-[0.3em] text-oat uppercase block mt-1">
+            REYKJAVÍK · ATELIER CMS
+          </span>
+        </a>
+        <div class="mt-3 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="text-[10px] tracking-wider uppercase text-oat/80">SQLite Connected</span>
+        </div>
+      </div>
+
+      <!-- Navigation Menu Items -->
+      <nav class="p-3 space-y-1 text-xs font-medium tracking-wider uppercase">
+        <button type="button" class="nav-tab-btn active w-full flex items-center justify-between px-3.5 py-3 rounded-md transition-all text-left bg-darkchoc text-oat" data-tab="dashboard">
+          <span class="flex items-center gap-3">
+            <svg class="w-4 h-4 text-oat" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+            Tổng quan
+          </span>
+        </button>
+
+        <button type="button" class="nav-tab-btn w-full flex items-center justify-between px-3.5 py-3 rounded-md transition-all text-left hover:bg-darkchoc/70 text-cream/80" data-tab="products">
+          <span class="flex items-center gap-3">
+            <svg class="w-4 h-4 text-oat" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+            Sản phẩm
+          </span>
+          <span id="badge-products-count" class="px-1.5 py-0.5 text-[10px] bg-darkchoc text-oat rounded-full">8</span>
+        </button>
+
+        <button type="button" class="nav-tab-btn w-full flex items-center justify-between px-3.5 py-3 rounded-md transition-all text-left hover:bg-darkchoc/70 text-cream/80" data-tab="hero">
+          <span class="flex items-center gap-3">
+            <svg class="w-4 h-4 text-oat" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            Banner & Hero
+          </span>
+          <span class="px-1.5 py-0.5 text-[10px] bg-darkchoc text-oat rounded-full">3</span>
+        </button>
+
+        <button type="button" class="nav-tab-btn w-full flex items-center justify-between px-3.5 py-3 rounded-md transition-all text-left hover:bg-darkchoc/70 text-cream/80" data-tab="content">
+          <span class="flex items-center gap-3">
+            <svg class="w-4 h-4 text-oat" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+            Triết lý & Chất liệu
+          </span>
+        </button>
+
+        <button type="button" class="nav-tab-btn w-full flex items-center justify-between px-3.5 py-3 rounded-md transition-all text-left hover:bg-darkchoc/70 text-cream/80" data-tab="journal">
+          <span class="flex items-center gap-3">
+            <svg class="w-4 h-4 text-oat" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            Tạp chí Journal
+          </span>
+          <span id="badge-journal-count" class="px-1.5 py-0.5 text-[10px] bg-darkchoc text-oat rounded-full">3</span>
+        </button>
+
+        <button type="button" class="nav-tab-btn w-full flex items-center justify-between px-3.5 py-3 rounded-md transition-all text-left hover:bg-darkchoc/70 text-cream/80" data-tab="orders">
+          <span class="flex items-center gap-3">
+            <svg class="w-4 h-4 text-oat" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+            Đơn hàng
+          </span>
+          <span id="badge-orders-count" class="px-1.5 py-0.5 text-[10px] bg-accent-chocolate text-cream font-bold rounded-full">1</span>
+        </button>
+
+        <button type="button" class="nav-tab-btn w-full flex items-center justify-between px-3.5 py-3 rounded-md transition-all text-left hover:bg-darkchoc/70 text-cream/80" data-tab="vip">
+          <span class="flex items-center gap-3">
+            <svg class="w-4 h-4 text-oat" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            Khách VIP & Mã giảm
+          </span>
+        </button>
+
+        <button type="button" class="nav-tab-btn w-full flex items-center justify-between px-3.5 py-3 rounded-md transition-all text-left hover:bg-darkchoc/70 text-cream/80" data-tab="settings">
+          <span class="flex items-center gap-3">
+            <svg class="w-4 h-4 text-oat" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            Cài đặt chung
+          </span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Sidebar Bottom Actions -->
+    <div class="p-4 border-t border-darkchoc space-y-2 text-xs">
+      <a href="/" target="_blank" class="w-full flex items-center justify-center gap-2 py-2.5 px-3 bg-darkchoc hover:bg-chocolate text-cream transition-colors rounded-sm text-center font-medium uppercase tracking-wider">
+        <span>Xem Website</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+      </a>
+      <div class="flex gap-2">
+        <button id="btn-backup-data" type="button" class="flex-1 py-1.5 px-2 bg-espresso hover:bg-darkchoc border border-darkchoc text-oat text-[10px] uppercase tracking-wider text-center transition-colors">
+          Sao lưu
+        </button>
+        <button id="btn-restore-data" type="button" class="flex-1 py-1.5 px-2 bg-espresso hover:bg-darkchoc border border-darkchoc text-oat text-[10px] uppercase tracking-wider text-center transition-colors">
+          Khôi phục
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ==========================================================================
+       MAIN CONTENT WORKSPACE
+       ========================================================================== -->
+  <main class="flex-1 flex flex-col min-w-0 bg-adminbg min-h-screen">
+    
+    <!-- Top Bar -->
+    <header class="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between sticky top-0 z-20 shadow-sm">
+      <div class="flex items-center gap-4">
+        <h2 id="current-section-title" class="font-serif text-2xl text-espresso">
+          Tổng quan Quản trị
+        </h2>
+        <span class="text-xs text-gray-400">·</span>
+        <span class="text-xs text-gray-500 font-light">Không cần đào tạo — thao tác trực quan</span>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <!-- Quick Add Button -->
+        <button id="btn-quick-add-product" type="button" class="inline-flex items-center gap-2 px-4 py-2 bg-espresso hover:bg-darkchoc text-cream text-xs uppercase tracking-wider font-medium transition-all shadow-sm rounded-sm">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          Thêm sản phẩm mới
+        </button>
+      </div>
+    </header>
+
+    <!-- Workspace Container -->
+    <div class="p-8 max-w-7xl w-full mx-auto space-y-8 flex-1">
+
+      <!-- ======================================================================
+           TAB 1: DASHBOARD
+           ====================================================================== -->
+      <section id="tab-dashboard" class="tab-content space-y-8">
+        <!-- 4 Metric Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="bg-white p-6 border border-gray-200 rounded-sm shadow-sm flex flex-col justify-between">
+            <span class="text-xs uppercase tracking-wider text-gray-400 font-medium">Sản phẩm đang bán</span>
+            <div class="flex items-baseline justify-between mt-3">
+              <span id="stat-products-count" class="font-serif text-3xl text-espresso font-semibold">8</span>
+              <span class="text-xs text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">100% Active</span>
+            </div>
+          </div>
+
+          <div class="bg-white p-6 border border-gray-200 rounded-sm shadow-sm flex flex-col justify-between">
+            <span class="text-xs uppercase tracking-wider text-gray-400 font-medium">Đơn hàng nhận được</span>
+            <div class="flex items-baseline justify-between mt-3">
+              <span id="stat-orders-count" class="font-serif text-3xl text-espresso font-semibold">1</span>
+              <span class="text-xs text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">Đang may đo</span>
+            </div>
+          </div>
+
+          <div class="bg-white p-6 border border-gray-200 rounded-sm shadow-sm flex flex-col justify-between">
+            <span class="text-xs uppercase tracking-wider text-gray-400 font-medium">Doanh thu tạm tính (ISK)</span>
+            <div class="flex items-baseline justify-between mt-3">
+              <span id="stat-revenue" class="font-serif text-3xl text-espresso font-semibold">72.000 kr</span>
+              <span class="text-xs text-gray-500 font-mono">ISK</span>
+            </div>
+          </div>
+
+          <div class="bg-white p-6 border border-gray-200 rounded-sm shadow-sm flex flex-col justify-between">
+            <span class="text-xs uppercase tracking-wider text-gray-400 font-medium">Thành viên VIP Club</span>
+            <div class="flex items-baseline justify-between mt-3">
+              <span id="stat-subscribers-count" class="font-serif text-3xl text-espresso font-semibold">0</span>
+              <span class="text-xs text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full">Mã WELCOME10</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Orders & Fast Actions -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <!-- Recent Orders (2 cols) -->
+          <div class="lg:col-span-2 bg-white border border-gray-200 rounded-sm shadow-sm p-6">
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-gray-100">
+              <h3 class="font-serif text-xl text-espresso">Đơn hàng mới nhất</h3>
+              <button type="button" class="text-xs text-chocolate hover:underline uppercase tracking-wider" onclick="switchTab('orders')">
+                Xem tất cả đơn &nbsp;→
+              </button>
+            </div>
+            <div id="dashboard-recent-orders" class="space-y-3">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+
+          <!-- Quick Tips & Live Shortcuts -->
+          <div class="bg-white border border-gray-200 rounded-sm shadow-sm p-6 space-y-5">
+            <h3 class="font-serif text-xl text-espresso">Hướng dẫn nhanh cho Quản trị</h3>
+            <div class="space-y-3 text-xs text-gray-600 font-light leading-relaxed">
+              <div class="p-3 bg-adminbg border-l-2 border-chocolate">
+                <strong class="font-medium text-espresso block mb-0.5">1. Sửa giá sản phẩm</strong>
+                Chỉ cần nhập giá bằng tiền **ISK (kr)**, hệ thống sẽ tự động tính toán số tiền tương ứng ra EUR (€) và USD ($).
+              </div>
+              <div class="p-3 bg-adminbg border-l-2 border-chocolate">
+                <strong class="font-medium text-espresso block mb-0.5">2. Bật/Tắt hiển thị tức thì</strong>
+                Sử dụng nút công tắc xanh trên từng sản phẩm để tạm ẩn khi hết hàng trong kho mà không làm mất thông tin.
+              </div>
+              <div class="p-3 bg-adminbg border-l-2 border-chocolate">
+                <strong class="font-medium text-espresso block mb-0.5">3. Quản lý màu & Swatches</strong>
+                Thêm bao nhiêu màu tùy thích, mỗi màu có thể gắn riêng ảnh chụp người mẫu và ảnh cận cảnh chi tiết thớ len.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           TAB 2: PRODUCTS
+           ====================================================================== -->
+      <section id="tab-products" class="tab-content hidden space-y-6">
+        <!-- Filter and Search Bar -->
+        <div class="bg-white p-4 border border-gray-200 rounded-sm shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+          <div class="flex flex-wrap items-center gap-2 text-xs uppercase tracking-wider">
+            <button type="button" class="prod-filter-btn px-3 py-1.5 bg-espresso text-cream font-medium rounded-sm" data-category="all">
+              Tất cả (<span id="filter-count-all">8</span>)
+            </button>
+            <button type="button" class="prod-filter-btn px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-sm" data-category="coats">
+              Coats
+            </button>
+            <button type="button" class="prod-filter-btn px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-sm" data-category="knitwear">
+              Knitwear
+            </button>
+            <button type="button" class="prod-filter-btn px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-sm" data-category="essentials">
+              Essentials
+            </button>
+            <button type="button" class="prod-filter-btn px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-sm" data-category="accessories">
+              Accessories
+            </button>
+          </div>
+
+          <div class="w-full md:w-72 relative">
+            <input 
+              id="admin-search-products" 
+              type="text" 
+              placeholder="Tìm theo tên hoặc chất liệu..." 
+              class="w-full pl-8 pr-3 py-1.5 text-xs border border-gray-200 rounded-sm focus:outline-none focus:border-espresso"
+            />
+            <svg class="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          </div>
+        </div>
+
+        <!-- Products List Container -->
+        <div class="bg-white border border-gray-200 rounded-sm shadow-sm overflow-hidden">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-gray-200 bg-gray-50 text-[11px] uppercase tracking-wider text-gray-500 font-semibold">
+                <th class="py-3.5 px-4 w-16">Ảnh</th>
+                <th class="py-3.5 px-4">Tên sản phẩm</th>
+                <th class="py-3.5 px-4">Danh mục</th>
+                <th class="py-3.5 px-4">Giá bán (ISK)</th>
+                <th class="py-3.5 px-4">Màu sắc</th>
+                <th class="py-3.5 px-4">Trạng thái</th>
+                <th class="py-3.5 px-4 text-right">Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="admin-products-table-body" class="divide-y divide-gray-100 text-xs">
+              <!-- Rendered by JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           TAB 3: HERO SLIDES
+           ====================================================================== -->
+      <section id="tab-hero" class="tab-content hidden space-y-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="font-serif text-xl text-espresso">Quản lý Banner Chuyển cảnh (Hero Slider)</h3>
+            <p class="text-xs text-gray-500 font-light mt-0.5">3 khung cảnh thời trang xuất hiện đầu trang chủ Forméli & Co.</p>
+          </div>
+          <button id="btn-save-hero-slides" type="button" class="btn-luxury-primary py-2 px-6 text-xs">
+            Lưu thay đổi Slide
+          </button>
+        </div>
+
+        <div id="hero-slides-admin-list" class="space-y-6">
+          <!-- Rendered by JS -->
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           TAB 4: CONTENT & PHILOSOPHY
+           ====================================================================== -->
+      <section id="tab-content" class="tab-content hidden space-y-8">
+        <!-- Story / Philosophy Section -->
+        <div class="bg-white border border-gray-200 p-6 rounded-sm shadow-sm space-y-6">
+          <div class="flex items-center justify-between border-b border-gray-100 pb-4">
+            <div>
+              <h3 class="font-serif text-xl text-espresso">Triết lý & Nguồn gốc Thương hiệu</h3>
+              <p class="text-xs text-gray-500 font-light">Hai khối câu chuyện: "Designed for Real Life" và "Less, but better"</p>
+            </div>
+            <button id="btn-save-philosophy" type="button" class="btn-luxury-primary py-2 px-5 text-xs">
+              Lưu Triết lý
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Left Card -->
+            <div class="space-y-4 p-4 bg-adminbg rounded-sm border border-gray-200">
+              <span class="text-xs uppercase tracking-brand text-chocolate font-semibold block">Khối trái: Nguồn gốc (Our Origins)</span>
+              <div>
+                <label class="block text-[11px] uppercase tracking-wider text-gray-500 mb-1">Tiêu đề nhỏ (Tag)</label>
+                <input id="phil-origins-tag" type="text" class="w-full p-2 text-xs border border-gray-300 rounded-sm bg-white" />
+              </div>
+              <div>
+                <label class="block text-[11px] uppercase tracking-wider text-gray-500 mb-1">Tiêu đề lớn</label>
+                <input id="phil-origins-title" type="text" class="w-full p-2 text-xs border border-gray-300 rounded-sm bg-white font-serif text-base" />
+              </div>
+              <div>
+                <label class="block text-[11px] uppercase tracking-wider text-gray-500 mb-1">Nội dung đoạn văn</label>
+                <textarea id="phil-origins-text" rows="4" class="w-full p-2 text-xs border border-gray-300 rounded-sm bg-white leading-relaxed"></textarea>
+              </div>
+              <div>
+                <label class="block text-[11px] uppercase tracking-wider text-gray-500 mb-1">Link ảnh minh họa</label>
+                <input id="phil-origins-img" type="text" class="w-full p-2 text-xs border border-gray-300 rounded-sm bg-white" />
+              </div>
+            </div>
+
+            <!-- Right Card -->
+            <div class="space-y-4 p-4 bg-adminbg rounded-sm border border-gray-200">
+              <span class="text-xs uppercase tracking-brand text-chocolate font-semibold block">Khối phải: Triết lý Bắc Âu (Nordic Philosophy)</span>
+              <div>
+                <label class="block text-[11px] uppercase tracking-wider text-gray-500 mb-1">Tiêu đề nhỏ (Tag)</label>
+                <input id="phil-nordic-tag" type="text" class="w-full p-2 text-xs border border-gray-300 rounded-sm bg-white" />
+              </div>
+              <div>
+                <label class="block text-[11px] uppercase tracking-wider text-gray-500 mb-1">Tiêu đề lớn</label>
+                <input id="phil-nordic-title" type="text" class="w-full p-2 text-xs border border-gray-300 rounded-sm bg-white font-serif text-base" />
+              </div>
+              <div>
+                <label class="block text-[11px] uppercase tracking-wider text-gray-500 mb-1">Nội dung đoạn văn</label>
+                <textarea id="phil-nordic-text" rows="4" class="w-full p-2 text-xs border border-gray-300 rounded-sm bg-white leading-relaxed"></textarea>
+              </div>
+              <div>
+                <label class="block text-[11px] uppercase tracking-wider text-gray-500 mb-1">Link ảnh minh họa</label>
+                <input id="phil-nordic-img" type="text" class="w-full p-2 text-xs border border-gray-300 rounded-sm bg-white" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Materials Section -->
+        <div class="bg-white border border-gray-200 p-6 rounded-sm shadow-sm space-y-6">
+          <div class="flex items-center justify-between border-b border-gray-100 pb-4">
+            <div>
+              <h3 class="font-serif text-xl text-espresso">Tôn vinh Chất liệu Tự nhiên (Natural Materials)</h3>
+              <p class="text-xs text-gray-500 font-light">Cận cảnh Cashmere Mông Cổ & Len cừu tự nhiên Iceland Lopi</p>
+            </div>
+            <button id="btn-save-materials" type="button" class="btn-luxury-primary py-2 px-5 text-xs">
+              Lưu Chất liệu
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <label class="block text-[11px] uppercase tracking-wider text-gray-500 mb-1">Chỉ số 1 (Độ mảnh sợi)</label>
+              <input id="mat-stat1-val" type="text" class="w-full p-2 text-xs border border-gray-300 rounded-sm mb-2 font-serif text-lg font-bold" />
+              <input id="mat-stat1-lbl" type="text" class="w-full p-2 text-xs border border-gray-300 rounded-sm" />
+            </div>
+
+            <div>
+              <label class="block text-[11px] uppercase tracking-wider text-gray-500 mb-1">Chỉ số 2 (Truy xuất nguồn gốc)</label>
+              <input id="mat-stat2-val" type="text" class="w-full p-2 text-xs border border-gray-300 rounded-sm mb-2 font-serif text-lg font-bold" />
+              <input id="mat-stat2-lbl" type="text" class="w-full p-2 text-xs border border-gray-300 rounded-sm" />
+            </div>
+
+            <div>
+              <label class="block text-[11px] uppercase tracking-wider text-gray-500 mb-1">Chỉ số 3 (Khả năng chịu gió tuyết)</label>
+              <input id="mat-stat3-val" type="text" class="w-full p-2 text-xs border border-gray-300 rounded-sm mb-2 font-serif text-lg font-bold" />
+              <input id="mat-stat3-lbl" type="text" class="w-full p-2 text-xs border border-gray-300 rounded-sm" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           TAB 5: JOURNAL ARTICLES
+           ====================================================================== -->
+      <section id="tab-journal" class="tab-content hidden space-y-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="font-serif text-xl text-espresso">Tạp chí Phong cách Sống Bắc Âu (Journal)</h3>
+            <p class="text-xs text-gray-500 font-light">Các bài viết chuyên sâu về phối đồ và nguồn gốc sợi dệt</p>
+          </div>
+          <button id="btn-add-article" type="button" class="btn-luxury-primary py-2 px-5 text-xs">
+            + Viết bài mới
+          </button>
+        </div>
+
+        <div id="admin-journal-list" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Rendered by JS -->
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           TAB 6: ORDERS & VIP
+           ====================================================================== -->
+      <section id="tab-orders" class="tab-content hidden space-y-8">
+        <!-- Orders Section -->
+        <div class="bg-white border border-gray-200 p-6 rounded-sm shadow-sm space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-serif text-xl text-espresso">Đơn đặt hàng từ Cửa hàng</h3>
+            <span class="text-xs text-gray-500">Tự động cập nhật khi khách hàng bấm Checkout</span>
+          </div>
+          <div id="admin-orders-table-wrapper" class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="bg-gray-50 border-b border-gray-200 text-gray-500 uppercase tracking-wider text-[11px]">
+                  <th class="p-3">Mã đơn</th>
+                  <th class="p-3">Khách hàng</th>
+                  <th class="p-3">Sản phẩm đã chọn</th>
+                  <th class="p-3">Tổng tiền</th>
+                  <th class="p-3">Thời gian</th>
+                  <th class="p-3">Trạng thái</th>
+                  <th class="p-3 text-right">Chuyển trạng thái</th>
+                </tr>
+              </thead>
+              <tbody id="admin-orders-table-body" class="divide-y divide-gray-100">
+                <!-- Rendered by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           TAB 7: VIP SUBSCRIBERS & PROMO CODES
+           ====================================================================== -->
+      <section id="tab-vip" class="tab-content hidden space-y-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- VIP Subscribers -->
+          <div class="bg-white border border-gray-200 p-6 rounded-sm shadow-sm space-y-4">
+            <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+              <h3 class="font-serif text-xl text-espresso">Thành viên VIP Circle</h3>
+              <button id="btn-export-subscribers" type="button" class="text-xs uppercase tracking-wider text-chocolate hover:underline">
+                Xuất file CSV &nbsp;↓
+              </button>
+            </div>
+            <p class="text-xs text-gray-500 font-light">Danh sách email đăng ký nhận bản tin ở cuối trang chủ.</p>
+            <div class="max-h-80 overflow-y-auto divide-y divide-gray-100 border border-gray-100" id="admin-subscribers-list">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+
+          <!-- Promo Codes -->
+          <div class="bg-white border border-gray-200 p-6 rounded-sm shadow-sm space-y-4">
+            <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+              <h3 class="font-serif text-xl text-espresso">Mã Giảm giá (Promo Codes)</h3>
+              <span class="text-xs text-gray-400">Áp dụng ngay trong giỏ hàng</span>
+            </div>
+            <!-- Add promo code inline form -->
+            <form id="form-add-promo" class="flex gap-2">
+              <input id="input-promo-code" type="text" placeholder="Mã (vd: WINTER20)" required class="flex-1 p-2 text-xs border border-gray-200 uppercase font-mono" />
+              <input id="input-promo-percent" type="number" min="1" max="90" placeholder="% giảm (vd: 15)" required class="w-24 p-2 text-xs border border-gray-200 font-mono" />
+              <button type="submit" class="btn-luxury-primary py-2 px-4 text-xs whitespace-nowrap">
+                Thêm mã
+              </button>
+            </form>
+            <div class="divide-y divide-gray-100 border border-gray-100 mt-4" id="admin-promos-list">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           TAB 8: STORE SETTINGS
+           ====================================================================== -->
+      <section id="tab-settings" class="tab-content hidden space-y-6">
+        <div class="bg-white border border-gray-200 p-6 rounded-sm shadow-sm space-y-6 max-w-3xl">
+          <div class="flex items-center justify-between border-b border-gray-100 pb-4">
+            <div>
+              <h3 class="font-serif text-xl text-espresso">Cài đặt Cửa hàng & Thanh thông báo</h3>
+              <p class="text-xs text-gray-500 font-light">Thay đổi chính sách miễn phí vận chuyển và địa chỉ Boutique</p>
+            </div>
+            <button id="btn-save-settings" type="button" class="btn-luxury-primary py-2 px-5 text-xs">
+              Lưu Cài đặt
+            </button>
+          </div>
+
+          <div class="space-y-4 text-xs">
+            <div>
+              <label class="block text-gray-600 font-medium mb-1">Nội dung thanh thông báo đầu trang (Announcement Bar)</label>
+              <input id="setting-announcement" type="text" class="w-full p-2.5 border border-gray-200 rounded-sm" />
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-gray-600 font-medium mb-1">Mức Freeship (ISK kr)</label>
+                <input id="setting-freeship-isk" type="number" class="w-full p-2.5 border border-gray-200 rounded-sm font-mono" />
+              </div>
+              <div>
+                <label class="block text-gray-600 font-medium mb-1">Mức Freeship (EUR €)</label>
+                <input id="setting-freeship-eur" type="number" class="w-full p-2.5 border border-gray-200 rounded-sm font-mono" />
+              </div>
+              <div>
+                <label class="block text-gray-600 font-medium mb-1">Mức Freeship (USD $)</label>
+                <input id="setting-freeship-usd" type="number" class="w-full p-2.5 border border-gray-200 rounded-sm font-mono" />
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-gray-100 space-y-4">
+              <h4 class="font-serif text-base text-espresso">Thông tin Flagship Atelier tại Reykjavík</h4>
+              <div>
+                <label class="block text-gray-600 font-medium mb-1">Địa chỉ Boutique</label>
+                <input id="setting-boutique-address" type="text" class="w-full p-2.5 border border-gray-200 rounded-sm" />
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label class="block text-gray-600 font-medium mb-1">Giờ mở cửa</label>
+                  <input id="setting-boutique-hours" type="text" class="w-full p-2.5 border border-gray-200 rounded-sm" />
+                </div>
+                <div>
+                  <label class="block text-gray-600 font-medium mb-1">Số điện thoại</label>
+                  <input id="setting-boutique-phone" type="text" class="w-full p-2.5 border border-gray-200 rounded-sm" />
+                </div>
+                <div>
+                  <label class="block text-gray-600 font-medium mb-1">Email Concierge</label>
+                  <input id="setting-boutique-email" type="email" class="w-full p-2.5 border border-gray-200 rounded-sm" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       MODAL: PRODUCT EDIT & CREATE (VISUAL & INTUITIVE)
+       ========================================================================== -->
+  <div id="modal-product" class="fixed inset-0 bg-espresso/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-sm border border-gray-200 max-w-4xl w-full max-h-[92vh] flex flex-col shadow-2xl">
+      <!-- Modal Header -->
+      <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+        <div>
+          <h3 id="modal-product-title" class="font-serif text-2xl text-espresso">Chỉnh sửa Sản phẩm</h3>
+          <span class="text-xs text-gray-500 font-light">Tự động đồng bộ với giao diện khách hàng ngay sau khi lưu</span>
+        </div>
+        <button id="btn-close-product-modal" type="button" class="text-gray-400 hover:text-espresso p-2 text-xl">✕</button>
+      </div>
+
+      <!-- Modal Body (Tabs & Form) -->
+      <form id="form-product" class="p-6 overflow-y-auto space-y-6 flex-1 text-xs">
+        <input type="hidden" id="prod-form-id" />
+
+        <!-- Row 1: Name, Category, Status -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="md:col-span-2">
+            <label class="block text-gray-700 font-medium mb-1">Tên sản phẩm *</label>
+            <input id="prod-form-name" type="text" required placeholder="vd: Double-Breasted Cashmere Coat" class="w-full p-2.5 border border-gray-200 rounded-sm font-serif text-base text-espresso" />
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium mb-1">Danh mục *</label>
+            <select id="prod-form-category" class="w-full p-2.5 border border-gray-200 rounded-sm bg-white font-medium">
+              <option value="Coats" data-key="coats">Coats (Áo khoác dạ)</option>
+              <option value="Knitwear" data-key="knitwear">Knitwear (Đồ len dệt kim)</option>
+              <option value="Essentials" data-key="essentials">Essentials (Quần tây & Blazer)</option>
+              <option value="Accessories" data-key="accessories">Accessories (Khăn & Túi)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Row 2: Pricing (Smart Multi-currency Calculator) -->
+        <div class="bg-adminbg p-4 rounded-sm border border-gray-200 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-medium text-espresso uppercase tracking-wider text-[11px]">Giá bán đa tiền tệ (Tự động tính tỷ giá)</span>
+            <span class="text-[11px] text-gray-400 font-light">Nhập giá ISK kr, hệ thống tự gợi ý EUR/USD</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-gray-600 mb-1">Giá ISK (kr) *</label>
+              <input id="prod-form-price-isk" type="number" required placeholder="vd: 72000" class="w-full p-2 border border-gray-300 rounded-sm bg-white font-mono text-sm font-semibold" />
+            </div>
+            <div>
+              <label class="block text-gray-600 mb-1">Giá EUR (€)</label>
+              <input id="prod-form-price-eur" type="number" placeholder="480" class="w-full p-2 border border-gray-300 rounded-sm bg-white font-mono text-sm" />
+            </div>
+            <div>
+              <label class="block text-gray-600 mb-1">Giá USD ($)</label>
+              <input id="prod-form-price-usd" type="number" placeholder="520" class="w-full p-2 border border-gray-300 rounded-sm bg-white font-mono text-sm" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 3: Tagline, Badges -->
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">Mô tả ngắn (Tagline)</label>
+          <input id="prod-form-tagline" type="text" placeholder="vd: Tailored in Reykjavik from 10% Icelandic wool & 90% Grade-A cashmere." class="w-full p-2.5 border border-gray-200 rounded-sm" />
+        </div>
+
+        <!-- Row 4: Composition & Care Guide -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-gray-700 font-medium mb-1">Thành phần sợi (Composition)</label>
+            <textarea id="prod-form-composition" rows="2" placeholder="90% Mongolian Cashmere, 10% Icelandic Virgin Wool. Cupro lining." class="w-full p-2.5 border border-gray-200 rounded-sm leading-relaxed"></textarea>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium mb-1">Hướng dẫn bảo quản & Giặt là (Care Guide)</label>
+            <textarea id="prod-form-care" rows="2" placeholder="Specialist dry clean only. Store on shaped wooden hanger." class="w-full p-2.5 border border-gray-200 rounded-sm leading-relaxed"></textarea>
+          </div>
+        </div>
+
+        <!-- Row 5: Flags (New in, Signature, Active) -->
+        <div class="flex flex-wrap items-center gap-6 py-2 border-t border-b border-gray-100">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input id="prod-form-active" type="checkbox" checked class="w-4 h-4 text-chocolate" />
+            <span class="font-medium text-espresso">Đang mở bán trên trang chủ</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input id="prod-form-signature" type="checkbox" checked class="w-4 h-4 text-chocolate" />
+            <span class="font-medium text-espresso">Nổi bật (Hiển thị ở The Signature Edit)</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input id="prod-form-new" type="checkbox" class="w-4 h-4 text-chocolate" />
+            <span class="font-medium text-espresso">Gắn nhãn "NEW IN"</span>
+          </label>
+        </div>
+
+        <!-- Row 6: Sizes -->
+        <div>
+          <label class="block text-gray-700 font-medium mb-1.5">Bảng kích cỡ (Sizes có sẵn)</label>
+          <div class="flex flex-wrap gap-2" id="prod-sizes-selector">
+            <label class="px-3 py-1.5 border border-gray-300 rounded-sm cursor-pointer hover:border-espresso text-xs font-medium"><input type="checkbox" value="XS" class="mr-1" checked> XS</label>
+            <label class="px-3 py-1.5 border border-gray-300 rounded-sm cursor-pointer hover:border-espresso text-xs font-medium"><input type="checkbox" value="S" class="mr-1" checked> S</label>
+            <label class="px-3 py-1.5 border border-gray-300 rounded-sm cursor-pointer hover:border-espresso text-xs font-medium"><input type="checkbox" value="M" class="mr-1" checked> M</label>
+            <label class="px-3 py-1.5 border border-gray-300 rounded-sm cursor-pointer hover:border-espresso text-xs font-medium"><input type="checkbox" value="L" class="mr-1" checked> L</label>
+            <label class="px-3 py-1.5 border border-gray-300 rounded-sm cursor-pointer hover:border-espresso text-xs font-medium"><input type="checkbox" value="XL" class="mr-1"> XL</label>
+            <label class="px-3 py-1.5 border border-gray-300 rounded-sm cursor-pointer hover:border-espresso text-xs font-medium"><input type="checkbox" value="One Size" class="mr-1"> One Size</label>
+          </div>
+        </div>
+
+        <!-- Row 7: Color Swatches & Image Manager -->
+        <div class="space-y-3 pt-2">
+          <div class="flex items-center justify-between">
+            <label class="block text-gray-700 font-medium">Màu sắc & Hình ảnh tương ứng (Color Swatches)</label>
+            <button id="btn-add-color-variant" type="button" class="text-chocolate hover:underline font-semibold flex items-center gap-1">
+              + Thêm màu mới
+            </button>
+          </div>
+          <div id="prod-colors-container" class="space-y-3">
+            <!-- Dynamically populated variant rows -->
+          </div>
+        </div>
+
+        <!-- Form Submit Bar -->
+        <div class="pt-4 border-t border-gray-200 flex items-center justify-end gap-3 sticky bottom-0 bg-white">
+          <button id="btn-cancel-product" type="button" class="px-5 py-2.5 border border-gray-300 hover:border-gray-400 text-gray-600 rounded-sm uppercase tracking-wider font-medium">
+            Hủy
+          </button>
+          <button type="submit" class="btn-luxury-primary py-2.5 px-7 text-xs font-semibold">
+            Lưu Sản phẩm & Đồng bộ Store
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="admin-toast" class="toast-notice rounded-sm z-[100]" role="status">
+    <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+    <span class="toast-text font-serif text-sm">Đã cập nhật dữ liệu thành công</span>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
