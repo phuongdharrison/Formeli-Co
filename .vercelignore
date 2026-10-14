@@ -1,0 +1,10 @@
+# Development-only backend; deploy a Functions entrypoint after migration.
+server.py
+*.db
+*.db-*
+*.sqlite*
+.git
+.env*
+__pycache__
+*.pyc
+KE_HOACH_HOAN_THIEN.md

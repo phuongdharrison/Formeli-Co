@@ -1,3 +1,16 @@
 .DS_Store
 Thumbs.db
 
+# Local databases, credentials and generated runtime files
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+.env
+.env.*
+!.env.example
+.vercel/
+__pycache__/
+*.pyc
+

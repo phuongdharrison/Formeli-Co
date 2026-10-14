@@ -10,8 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
     activeFilter: 'all',
     currentHeroSlide: 0,
     heroAutoPlayInterval: null,
-    discountApplied: 0 // percentage
+    discountApplied: 0, // percentage
+    liveProducts: null
   };
+
+  function getCatalog() {
+    return state.liveProducts || (typeof PRODUCTS_DATA !== 'undefined' ? PRODUCTS_DATA : []);
+  }
 
   // Currency Exchange Configuration
   const CURRENCY_CONFIG = {
@@ -200,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderProducts() {
     if (!productsGrid) return;
 
-    const filtered = PRODUCTS_DATA.filter(prod => {
+    const filtered = getCatalog().filter(prod => {
       if (state.activeFilter === 'all') return true;
       return prod.categoryKey === state.activeFilter;
     });
@@ -329,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.quick-add-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const prodId = btn.getAttribute('data-product-id');
-        const product = PRODUCTS_DATA.find(p => p.id === prodId);
+        const product = getCatalog().find(p => p.id === prodId);
         if (product) {
           const card = btn.closest('.product-card');
           const activeDot = card.querySelector('.swatch-dot.active') || card.querySelector('.swatch-dot');
@@ -362,7 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Quick View Modal
   // ==========================================================================
   function openQuickView(productId) {
-    const product = PRODUCTS_DATA.find(p => p.id === productId);
+    const product = getCatalog().find(p => p.id === productId);
     if (!product || !quickViewContent) return;
 
     let selectedColor = product.colors[0];
@@ -787,7 +792,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      const matches = PRODUCTS_DATA.filter(p => 
+      const matches = getCatalog().filter(p =>
         p.name.toLowerCase().includes(q) ||
         p.category.toLowerCase().includes(q) ||
         p.tagline.toLowerCase().includes(q) ||
@@ -824,64 +829,77 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ==========================================================================
-  // Interactive Palette Explorer (Image 1 features)
-  // ==========================================================================
-  const paletteSwatches = document.querySelectorAll('.palette-color-block');
-  const paletteInfoTitle = document.getElementById('palette-info-name');
-  const paletteInfoHex = document.getElementById('palette-info-hex');
-  const paletteInfoDesc = document.getElementById('palette-info-desc');
 
-  paletteSwatches.forEach(block => {
-    block.addEventListener('click', () => {
-      paletteSwatches.forEach(b => b.classList.remove('ring-2', 'ring-text-primary'));
-      block.classList.add('ring-2', 'ring-text-primary');
-
-      const name = block.getAttribute('data-name');
-      const hex = block.getAttribute('data-hex');
-      const desc = block.getAttribute('data-desc');
-
-      if (paletteInfoTitle) paletteInfoTitle.textContent = name;
-      if (paletteInfoHex) paletteInfoHex.textContent = hex;
-      if (paletteInfoDesc) paletteInfoDesc.textContent = desc;
-
-      // Copy hex code to clipboard
-      navigator.clipboard?.writeText(hex);
-      showToast(`Copied ${name} (${hex}) to clipboard!`);
-    });
-  });
-
-  // Pairing cards click
-  document.querySelectorAll('.pairing-card').forEach(card => {
-    card.addEventListener('click', () => {
-      const title = card.getAttribute('data-pairing-title');
-      showToast(`Selected harmony: ${title}`);
-      const editSection = document.getElementById('signature-edit-section');
-      if (editSection) {
-        editSection.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  });
-
-  // Newsletter Submit
+  // Newsletter Submit with CMS synchronization
   const newsletterForm = document.getElementById('newsletter-form');
   if (newsletterForm) {
-    newsletterForm.addEventListener('submit', (e) => {
+    newsletterForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const emailInput = document.getElementById('newsletter-email');
       if (emailInput && emailInput.value) {
+        const email = emailInput.value.trim();
+        try {
+          const response = await fetch('/api/subscribers', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+          });
+          if (!response.ok) throw new Error('Subscription request failed');
+          const result = await response.json();
+          if (!result.success) throw new Error('Subscription was not saved');
+        } catch (err) {
+          showToast('We could not save your subscription. Please try again later.');
+          return;
+        }
         showToast(`Welcome to the Forméli Circle! Use code WELCOME10 for 10% off.`);
         emailInput.value = '';
       }
     });
   }
 
-  // Checkout button simulation
+  // Checkout button simulation & Order submission to CMS
   const checkoutBtn = document.getElementById('cart-checkout-btn');
   if (checkoutBtn) {
-    checkoutBtn.addEventListener('click', () => {
+    checkoutBtn.addEventListener('click', async () => {
       if (state.cart.length === 0) return;
-      alert(`✦ Forméli & Co. Boutique Checkout ✦\n\nThank you for choosing Forméli & Co. (Reykjavík, Iceland).\nTotal: ${cartSubtotalEl.textContent}\nComplimentary packaging with signature ribbon included.\n\nYour order is now being prepared at our Reykjavík atelier.`);
+
+      const totalEUR = state.cart.reduce((sum, item) => sum + (item.priceEUR * item.quantity), 0);
+      const totalAmount = state.currency === 'ISK' ? totalEUR * 150 : totalEUR;
+
+      const orderPayload = {
+        customer_name: "Online Atelier Client",
+        customer_email: "client@formeli.is",
+        total_amount: totalAmount,
+        currency: state.currency,
+        items: state.cart.map(item => ({
+          name: item.name,
+          colorName: item.colorName,
+          size: item.size,
+          quantity: item.quantity,
+          price: item.priceISK || (item.priceEUR * 150)
+        })),
+        notes: "Storefront order simulation"
+      };
+
+      try {
+        if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+          showToast('Online checkout is not available yet. Your bag has been saved.');
+          return;
+        }
+        const response = await fetch('/api/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(orderPayload)
+        });
+        if (!response.ok) throw new Error('Order request failed');
+        const result = await response.json();
+        if (!result.success || !result.order_id) throw new Error('Order was not saved');
+      } catch (err) {
+        showToast('We could not save your test order. Your bag has been kept.');
+        return;
+      }
+
+      alert(`✦ Forméli & Co. Boutique Checkout ✦\n\nThank you for choosing Forméli & Co. (Reykjavík, Iceland).\nTotal: ${cartSubtotalEl.textContent}\nComplimentary packaging with signature ribbon included.\n\nYour order is now logged in the Atelier CMS.`);
       state.cart = [];
       saveCart();
       renderCart();
@@ -908,9 +926,81 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  // CMS Real-time Synchronization
+  async function syncWithCMS() {
+    try {
+      const res = await fetch('/api/products');
+      if (res.ok) {
+        const json = await res.json();
+        if (json.success && Array.isArray(json.data)) {
+          state.liveProducts = json.data;
+          renderProducts();
+        }
+      }
+    } catch (err) {
+      // Offline fallback
+    }
+
+    try {
+      const resContent = await fetch('/api/content');
+      if (resContent.ok) {
+        const jsonContent = await resContent.json();
+        if (jsonContent.success && jsonContent.data) {
+          applyLiveContent(jsonContent.data);
+        }
+      }
+    } catch (err) {
+      // Offline fallback
+    }
+  }
+
+  function applyLiveContent(content) {
+    if (content.site_settings) {
+      const s = content.site_settings;
+      const shipBar = document.querySelector('aside .font-light.uppercase.tracking-luxury');
+      if (shipBar && s.announcement_shipping) {
+        shipBar.textContent = s.announcement_shipping;
+      }
+    }
+
+    if (content.hero_slides && Array.isArray(content.hero_slides)) {
+      content.hero_slides.forEach((slide, i) => {
+        if (heroSlides[i]) {
+          const bgDiv = heroSlides[i].querySelector('.bg-cover');
+          if (bgDiv && slide.image) bgDiv.style.backgroundImage = `url('${slide.image}')`;
+          const tagEl = heroSlides[i].querySelector('.text-oat');
+          if (tagEl && slide.tag) tagEl.textContent = slide.tag;
+          const h2El = heroSlides[i].querySelector('h2');
+          if (h2El && slide.title) h2El.textContent = slide.title;
+          const pEl = heroSlides[i].querySelector('p');
+          if (pEl && slide.subtitle) pEl.textContent = slide.subtitle;
+        }
+      });
+    }
+
+    if (content.philosophy) {
+      const p = content.philosophy;
+      const philSect = document.getElementById('philosophy-section');
+      if (philSect) {
+        const headings = philSect.querySelectorAll('h3');
+        const paragraphs = philSect.querySelectorAll('p');
+        const images = philSect.querySelectorAll('img');
+
+        if (headings[0] && p.origins_title) headings[0].textContent = p.origins_title;
+        if (paragraphs[0] && p.origins_text) paragraphs[0].textContent = p.origins_text;
+        if (images[0] && p.origins_image) images[0].src = p.origins_image;
+
+        if (headings[1] && p.nordic_title) headings[1].textContent = p.nordic_title;
+        if (paragraphs[1] && p.nordic_text) paragraphs[1].textContent = p.nordic_text;
+        if (images[1] && p.nordic_image) images[1].src = p.nordic_image;
+      }
+    }
+  }
+
   // Initial Boot
   applyTheme(state.theme);
   updateCartBadges();
   renderProducts();
   renderCart();
+  syncWithCMS();
 });
